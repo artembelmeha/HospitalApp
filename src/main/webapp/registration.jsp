@@ -19,52 +19,38 @@
           integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
     <title><fmt:message key="login.registration" /></title>
 </head>
-<body style ="background: #eee;" >
+<body>
 <jsp:include page="header.jsp"/>
 <div class="m-5 p-1">
     <h1><fmt:message key="login.newUserRegistration"/></h1>
     <br>
-    <form method="POST" action="@{/users}" object="${registrationInfo}">
+    <form method="POST" method="POST" action="/api/registration">
         <table>
             <tr>
+                <td> <fmt:message key="login.firstName" /> :</td>
                 <td>
-                    <label for="firstName">
-                        <fmt:message key="login.firstName" /> :
-                    </label>
-                </td>
-                <td>
-                    <input type="text" name="firstName" size="24" id="firstName"/>
+                    <input type="text" class="form-control form-control-sm ${status}" name="firstName" value="${firstName}"/>
                 </td>
             </tr>
             <tr>
+                <td> <fmt:message key="login.lastName" /> :</td>
                 <td>
-                    <label for="lastName">
-                        <fmt:message key="login.lastName" /> :
-                    </label>
-                </td>
-                <td>
-                    <input type="text" name="lastName" size="24" id="lastName"/>
+                    <input type="text" class="form-control form-control-sm ${status}" name="lastName" value="${lastName}"/>
                 </td>
             </tr>
 
             <tr>
+                <td> <fmt:message key="login.email" /> :</td>
                 <td>
-                    <label for="email">
-                        <fmt:message key="login.email" /> :
-                    </label>
-                </td>
-                <td>
-                    <input type="email" name="email" size="24" id="email"/>
+                    <input type="text" class="form-control form-control-sm ${status}" name="email" value="${email}" />
+<%--                    pattern="[1-9]{1}[0-9]{1}"--%>
                 </td>
             </tr>
+
             <tr>
+                <td> <fmt:message key="login.password" /> :</td>
                 <td>
-                    <label for="password">
-                        <fmt:message key="login.password" /> :
-                    </label>
-                </td>
-                <td>
-                    <input type="password" name="password" size="24" id="password"/>
+                    <input type="password" class="form-control form-control-sm ${status}" name="password" value="${password}"/>
                 </td>
             </tr>
 
@@ -76,6 +62,7 @@
                     <input type="reset" value="<fmt:message key="login.clear"/>"/>
                 </td>
             </tr>
+
         </table>
 
     </form>

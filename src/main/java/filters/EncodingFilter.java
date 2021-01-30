@@ -1,5 +1,7 @@
 package filters;
 
+import exception.UnknownSqlException;
+
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -10,7 +12,7 @@ public class EncodingFilter implements Filter {
         encoding = filterConfig.getInitParameter("encoding");
     }
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+                         FilterChain chain) throws IOException, ServletException  {
         String requestEncoding = request.getCharacterEncoding();
         String responseEncoding = response.getCharacterEncoding();
         if (encoding != null &&
