@@ -8,12 +8,20 @@
 <fmt:setBundle basename="messages"/>
 
 
-<html lang="${sessionScope.lang}">
+<html lang="${sessionScope.lang}" onclick="clearError()">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css"
           integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
     <title><fmt:message key="login.login" /></title>
 </head>
+<script>
+    function clearError()
+    {
+        document.getElementById("test").remove();
+        document.getElementById("password").className = "form-control form-control-sm";
+        document.getElementById("email").className = "form-control form-control-sm";
+    }
+</script>
 <body>
 <jsp:include page="header.jsp"/>
 <div class="m-5 p-1" >
@@ -24,21 +32,25 @@
     <input type="hidden" name="command" value="login" />
 
     <c:if test="${status eq 'is-invalid'}" >
-        <div class="is-invalid" style="color: #ff0000">
+        <div class="is-invalid" id="test" style="color: #ff0000">
             <fmt:message  key="error.wrongCredential"/>
         </div>
+        <c:remove var="login_fails" scope="session" />
     </c:if>
+
     <table >
         <tr>
             <td> <fmt:message key="login.email" /> :</td>
             <td>
-                <input type="text" class="form-control form-control-sm ${status}" name="email" value="${email}">
+                <input type="text"  id="email" class="form-control form-control-sm ${status}" name="email" value="${email}"
+                       onclick="clearError()" />
             </td>
         </tr>
         <tr>
             <td> <fmt:message key="login.password" /> :</td>
             <td>
-                <input type="password" class="form-control form-control-sm ${status}" name="password" value="${password}"/>
+                <input type="password" id="password" class="form-control form-control-sm ${status}" name="password" value="${password}"
+                       onclick="clearError()" />
             </td>
         </tr>
         <tr>
@@ -46,11 +58,11 @@
                 <input type="submit" value="<fmt:message key="login.login"/>"/>
             </td>
             <td>
-                <input type="reset" value="<fmt:message key="login.clear"/>"/>
+                <input type="reset" class="clear" value="<fmt:message key="login.clear"/>" onclick="clearError()"/>
             </td>
         </tr>
     </table>
 </form>
 </div>
 </body>
-</html>
+</html >
