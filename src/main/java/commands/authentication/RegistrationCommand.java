@@ -23,11 +23,6 @@ public class RegistrationCommand implements Command {
         String lastName = request.getParameter("lastName");
         String firstName = request.getParameter("firstName");
 
-        if (email.equals("") || password.equals("") || lastName.equals("") || firstName.equals("")){
-            session.setAttribute("error", "Should be no empty field!!");
-            LOGGER.error("Should be no empty field!!");
-            return "/registration.jsp";
-        }
         try{
             User user = userService.getUserByEmail(email);
             if (user != null) {

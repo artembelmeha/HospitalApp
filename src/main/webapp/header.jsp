@@ -58,23 +58,20 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-
                 <c:if test="${empty user}">
                     <li>
-                        <a href="/api/registration.jsp">
+                        <a  href="/api/registration.jsp">
                             <fmt:message key="login.registration"/>
                         </a>
                     </li>
                 </c:if>
-
                 <c:if test="${empty user}">
-                    <li>
-                         <a href="/api/login.jsp">
+                    <li >
+                        <a href="/api/login.jsp">
                             <fmt:message key="login.login"/>
-                         </a>
+                        </a>
                     </li>
                 </c:if>
-
             </ul>
             <ul>
 

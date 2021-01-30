@@ -39,7 +39,6 @@ public class LoginCommand implements Command {
         } catch (UnknownSqlException  e) {
             LOGGER.error("Error caught while executing the method:", e);
             session.setAttribute("login_fails", e.getMessage());
-            session.setAttribute("email", email);
             return "/login.jsp";
         }
     }
