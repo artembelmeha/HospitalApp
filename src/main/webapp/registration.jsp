@@ -29,13 +29,15 @@
             <tr>
                 <td> <fmt:message key="login.firstName" /> :</td>
                 <td>
-                    <input type="text" class="form-control form-control-sm ${status}" name="firstName" value="${firstName}"/>
+                    <input type="text" class="form-control form-control-sm ${status}" name="firstName" value="${firstName}"
+                           pattern="[A-Z][a-z]+" title="<fmt:message key="message.forName"/>" />
                 </td>
             </tr>
             <tr>
                 <td> <fmt:message key="login.lastName" /> :</td>
                 <td>
-                    <input type="text" class="form-control form-control-sm ${status}" name="lastName" value="${lastName}"/>
+                    <input type="text" class="form-control form-control-sm ${status}" name="lastName" value="${lastName}"
+                           pattern="[A-Z][a-z]+" title="<fmt:message key="message.forName"/>" />
                 </td>
             </tr>
 
@@ -43,14 +45,14 @@
                 <td> <fmt:message key="login.email" /> :</td>
                 <td>
                     <input type="text" class="form-control form-control-sm ${status}" name="email" value="${email}" />
-<%--                    pattern="[1-9]{1}[0-9]{1}"--%>
                 </td>
             </tr>
 
             <tr>
                 <td> <fmt:message key="login.password" /> :</td>
                 <td>
-                    <input type="password" class="form-control form-control-sm ${status}" name="password" value="${password}"/>
+                    <input type="password" class="form-control form-control-sm ${status}" name="password" value="${password}"
+                    pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}" title="<fmt:message key="message.Password"/>"  />
                 </td>
             </tr>
 

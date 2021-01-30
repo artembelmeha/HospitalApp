@@ -43,7 +43,8 @@
             <td> <fmt:message key="login.email" /> :</td>
             <td>
                 <input type="text"  id="email" class="form-control form-control-sm ${status}" name="email" value="${email}"
-                       onclick="clearError()" />
+                       onclick="clearError()"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="<fmt:message key="message.Email"/>" />
             </td>
         </tr>
         <tr>
