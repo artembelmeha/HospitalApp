@@ -3,6 +3,7 @@ package service;
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.DaoFactory;
+import model.dao.UserDao;
 import model.dto.UserDto;
 import model.entity.Role;
 import model.entity.User;
@@ -18,12 +19,9 @@ public class UserService {
 
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
 
-    DaoFactory daoFactory = DaoFactory.getInstance();
-
-
     public long signIn(String email, String password) {
-        try {
-            User user =  daoFactory.createUserDao().findUserByEmail(email);
+        try(UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            User user =  userDao.findUserByEmail(email);
             if(EncryptUtil.encryptString(password).equals(user.getPassword())) {
                 return user.getId();
             }
@@ -35,8 +33,8 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-        try {
-            return daoFactory.createUserDao().findUserByEmail(email);
+        try(UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.findUserByEmail(email);
         } catch (EntityNotFoundException |UnknownSqlException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
@@ -45,8 +43,8 @@ public class UserService {
     }
 
     public List<User> getUsersByRole(Role role) {
-        try {
-            return daoFactory.createUserDao().getUsersByRole(role);
+        try(UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.getUsersByRole(role);
         } catch (EntityNotFoundException |UnknownSqlException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
@@ -62,7 +60,9 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setOnTreatment(false);
         user.setPatientsNumber(0);
-        return daoFactory.createUserDao().create(user);
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()){
+            return userDao.create(user);
+        }
     }
 
 

@@ -5,6 +5,7 @@ import commands.authentication.LogoutCommand;
 import commands.authentication.RegistrationCommand;
 import commands.user.ShowDoctors;
 import commands.user.ShowNurses;
+import commands.user.ShowPatients;
 import commands.user.ShowUndefineUsers;
 import service.UserService;
 
@@ -32,6 +33,7 @@ public class HospitalServlet extends HttpServlet {
         commands.put("admin/users", new ShowUndefineUsers());
         commands.put("admin/nurses", new ShowNurses());
         commands.put("admin/doctors", new ShowDoctors());
+        commands.put("admin/patients", new ShowPatients());
 
     }
 

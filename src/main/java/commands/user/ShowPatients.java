@@ -2,7 +2,7 @@ package commands.user;
 
 import commands.Command;
 import model.dto.DoctorDto;
-import model.dto.UserDto;
+import model.dto.PatientDto;
 import service.ServiceFactory;
 import service.UserService;
 
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 
 import static commands.Constants.*;
 import static model.entity.Role.DOCTOR;
-import static model.entity.Role.NURSE;
+import static model.entity.Role.PATIENT;
 
-public class ShowDoctors implements Command {
+public class ShowPatients implements Command {
 
 
     public static UserService userService = ServiceFactory.getInstance().getUserService();
@@ -23,10 +23,10 @@ public class ShowDoctors implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        List<DoctorDto> doctors = userService.getUsersByRole(DOCTOR).stream()
-                .map(DoctorDto::new)
+        List<PatientDto> patients = userService.getUsersByRole(PATIENT).stream()
+                .map(PatientDto::new)
                 .collect(Collectors.toList());
-        session.setAttribute(DOCTORS, doctors);
-        return REDIRECT_ADMIN_DOCTORS;
+        session.setAttribute(PATIENTS, patients);
+        return REDIRECT_ADMIN_PATIENTS;
     }
 }

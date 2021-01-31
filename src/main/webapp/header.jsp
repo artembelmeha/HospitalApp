@@ -38,7 +38,7 @@
                     or fn:contains(pageContext.request.requestURI, 'doctor')
                         or fn:contains(pageContext.request.requestURI, 'nurse')}">
                     <li>
-                         <a href="@{'/users/patients/page/1?sortField=firstName&sortDir=asc'}">
+                         <a href="/api/${role}/patients">
                             <fmt:message key="login.patients"/></a>
                     </li>
                 </c:if>
