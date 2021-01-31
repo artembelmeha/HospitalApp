@@ -30,7 +30,6 @@ public class LoginCommand implements Command {
         try {
             userService.signIn(email, password);
             UserDto currentUser = new UserDto(userService.getUserByEmail(email));
-            System.out.println(currentUser);
             session.setAttribute(USER, currentUser);
             if (currentUser.getRole().equals(ADMIN)){
                 return REDIRECT_ADMIN_SUCCESS;

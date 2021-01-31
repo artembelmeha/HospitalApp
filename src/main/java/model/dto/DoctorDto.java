@@ -12,4 +12,28 @@ public class DoctorDto extends UserDto{
         this.qualification = user.getQualification();
         this.patientsNumber = user.getPatientsNumber();
     }
+
+    public Qualification getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(Qualification qualification) {
+        this.qualification = qualification;
+    }
+
+    public int getPatientsNumber() {
+        return patientsNumber;
+    }
+
+    public void setPatientsNumber(int patientsNumber) {
+        this.patientsNumber = patientsNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorDto{" +
+                "qualification=" + qualification +
+                ", patientsNumber=" + patientsNumber +
+                '}';
+    }
 }
