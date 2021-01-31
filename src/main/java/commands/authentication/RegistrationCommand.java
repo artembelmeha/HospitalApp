@@ -11,7 +11,7 @@ import utils.EncryptUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import static commands.authentication.Constants.*;
+import static commands.Constants.*;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(RegistrationCommand.class);

@@ -30,7 +30,7 @@
             <ul>
                 <c:if test="${fn:contains(pageContext.request.requestURI, 'admin')}">
                     <li>
-                        <a href="@{/users/undefine}"> <fmt:message key="login.users"/> </a>
+                        <a href="/api/admin/users"> <fmt:message key="login.users"/> </a>
                     </li>
                 </c:if>
 

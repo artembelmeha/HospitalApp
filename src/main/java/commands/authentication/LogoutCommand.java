@@ -3,7 +3,7 @@ package commands.authentication;
 import commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
-import static commands.authentication.Constants.*;
+import static commands.Constants.*;
 
 public class LogoutCommand implements Command {
     @Override
