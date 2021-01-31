@@ -46,7 +46,7 @@
             <ul>
                 <c:if test="${fn:contains(pageContext.request.requestURI, 'admin')}">
                     <li>
-                        <a href="@{/users/nurses}">
+                        <a href="/api/admin/nurses">
                             <fmt:message key="login.nurses"/>
                          </a>
                     </li>

@@ -11,19 +11,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static commands.Constants.*;
-import static model.entity.Role.UNDEFINE;
+import static commands.Constants.USER;
+import static model.entity.Role.NURSE;
 
-public class ShowUndefineUsers implements Command {
+public class ShowNurses implements Command {
+
 
     public static UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        List<UserDto> undefineUsers = userService.getUsersByRole(UNDEFINE).stream()
+        List<UserDto> nurses = userService.getUsersByRole(NURSE).stream()
                 .map(UserDto::new)
                 .collect(Collectors.toList());
-        session.setAttribute(UNDEFINED, undefineUsers);
-        return REDIRECT_ADMIN_UNDEFINED;
+        session.setAttribute(NURSES, nurses);
+        return REDIRECT_ADMIN_NURSES;
     }
 }

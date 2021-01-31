@@ -14,11 +14,11 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<html lang="${sessionScope.lang}" user="${user}">
+<html lang="${sessionScope.lang}">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css"
           integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
-    <title><fmt:message key="login.users"/></title>
+    <title><fmt:message key="login.listOfUsers"/></title>
 </head>
     <body style ="background: #eee;">
         <jsp:include page="../header.jsp"/>
