@@ -42,7 +42,7 @@ public class PatientDto extends UserDto {
         this.cardId = cardId;
     }
 
-    public boolean isOnTreatment() {
+    public boolean getIsOnTreatment() {
         return isOnTreatment;
     }
 
@@ -72,5 +72,11 @@ public class PatientDto extends UserDto {
 
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "isOnTreatment=" + isOnTreatment;
     }
 }

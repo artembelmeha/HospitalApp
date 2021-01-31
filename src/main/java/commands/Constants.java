@@ -11,6 +11,9 @@ public interface Constants {
     public static final String NURSES = "nurses";
     public static final String DOCTORS = "doctors";
     public static final String PATIENTS = "patients";
+    public static final String PATIENT = "patient";
+    public static final String DOCTOR_FULL_NAME = "doctorFullName";
+    public static final String QUALIFICATION = "qualification";
 
 
 
@@ -34,6 +37,7 @@ public interface Constants {
     public static final String REDIRECT_ADMIN_NURSES = PREFIX_REDIRECT+"/admin/nurses.jsp";
     public static final String REDIRECT_ADMIN_DOCTORS = PREFIX_REDIRECT+"/admin/doctors.jsp";
     public static final String REDIRECT_ADMIN_PATIENTS = PREFIX_REDIRECT+"/admin/patients.jsp";
+    public static final String REDIRECT_ADMIN_PATIENT_INFO = PREFIX_REDIRECT+"/admin/patientInfo.jsp";
 
     public static final String REDIRECT_DOCTOR_SUCCESS = PREFIX_REDIRECT+"/doctor/success.jsp";
     public static final String REDIRECT_DOCTOR_PATIENTS = PREFIX_REDIRECT+"/doctor/patients.jsp";

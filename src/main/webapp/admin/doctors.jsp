@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page isELIgnored="false" %>
 
 
@@ -46,7 +47,8 @@
                         <a>${doctor.email}</a>
                     </td>
                     <td>
-                        <c:out value="${doctor.qualification}"/>
+                        <c:set var="qualification" value="qualification.${fn:toLowerCase(doctor.qualification)}" />
+                        <fmt:message key="${qualification}"/>
                     </td>
                     <td>
                         <c:out value="${doctor.patientsNumber}"/>

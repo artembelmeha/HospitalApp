@@ -26,6 +26,7 @@ public class JDBCUserDao implements UserDao {
     public static final String USERS_WHERE_ROLE = "SELECT * FROM users WHERE role = ?";
     public static final String FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
     public static final String FROM_USERS_WHERE_DOCTOR_ID = "SELECT * FROM users WHERE doctor_id = ?";
+    public static final String FROM_USERS_WHERE_ID = "SELECT * FROM users WHERE id = ?";
 
     private Connection connection;
 
@@ -56,8 +57,19 @@ public class JDBCUserDao implements UserDao {
 
 
     @Override
-    public User findById(int id) {
-        return null;
+    public User findById(long id) {
+        try(PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_ID)){
+            ps.setString( 1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            if(rs.next()) {
+                return userMapper.extractFromResultSet(rs);
+            }
+            throw new EntityNotFoundException("There is no user with id ["+id+"]");
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
     }
 
     @Override

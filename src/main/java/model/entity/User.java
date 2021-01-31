@@ -134,4 +134,23 @@ public class User {
         this.patientsNumber = patientsNumber;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", qualification=" + qualification +
+                ", doctorId=" + doctorId +
+                ", cardId=" + cardId +
+                ", isOnTreatment=" + isOnTreatment +
+                ", birthDate=" + birthDate +
+                ", sex=" + sex +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", patientsNumber=" + patientsNumber +
+                '}';
+    }
 }

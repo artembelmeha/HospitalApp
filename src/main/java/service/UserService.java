@@ -73,4 +73,13 @@ public class UserService {
             throw new UnknownSqlException();
         }
     }
+    public User getUserById(long id) {
+        try(UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.findById(id);
+        } catch (EntityNotFoundException |UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
+        }
+    }
 }
