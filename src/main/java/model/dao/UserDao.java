@@ -14,4 +14,6 @@ public interface UserDao extends GenericDao<User>{
     List<User> getUsersByRole(Role role) throws UnknownSqlException, ErrorMessageKeysContainedException;
 
     List<User> getUserByDoctorId(long id);
+
+    void updateUserRole(long id, Role role);
 }

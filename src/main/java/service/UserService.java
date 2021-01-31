@@ -12,6 +12,7 @@ import utils.EncryptUtil;
 
 import java.util.List;
 
+import static model.entity.Role.NURSE;
 import static model.entity.Role.UNDEFINE;
 
 
@@ -81,5 +82,15 @@ public class UserService {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException();
         }
+    }
+
+    public void assignAsNurse(long id){
+        try(UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            userDao.updateUserRole(id, NURSE);
+        }catch (EntityNotFoundException |UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+        }
+
     }
 }

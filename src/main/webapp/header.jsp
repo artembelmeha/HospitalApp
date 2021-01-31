@@ -53,7 +53,7 @@
                 </c:if>
                 <c:if test="${fn:contains(pageContext.request.requestURI, 'admin')}">
                     <li>
-                        <a href="'/api/admin/doctors">
+                        <a href="/api/admin/doctors">
                             <fmt:message key="doctor.doctors"/>
                         </a>
                     </li>

@@ -45,7 +45,7 @@
                                 <a>${user.email}</a>
                             </td>
                         <td>
-                            <a href="@{|/users/appoint/nurse/${user.id}|}"> <fmt:message key="list.signAsNurse"/></a>
+                            <a href="${pageContext.request.contextPath}/admin/assignAsNurse?id=${user.id}"> <fmt:message key="list.signAsNurse"/></a>
                         </td>
                         <td>
                             <a href="@{|/users/appoint/doctor/${user.id}|}"><fmt:message key="list.signAsDoctor"/></a>

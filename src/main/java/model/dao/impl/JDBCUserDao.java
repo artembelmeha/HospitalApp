@@ -27,6 +27,7 @@ public class JDBCUserDao implements UserDao {
     public static final String FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
     public static final String FROM_USERS_WHERE_DOCTOR_ID = "SELECT * FROM users WHERE doctor_id = ?";
     public static final String FROM_USERS_WHERE_ID = "SELECT * FROM users WHERE id = ?";
+    private static final String UPDATE_USER_ROLE = "UPDATE users SET role = ? WHERE id = ?";
 
     private Connection connection;
 
@@ -140,6 +141,18 @@ public class JDBCUserDao implements UserDao {
                 users.add(userMapper.extractFromResultSet(rs));
             }
             return users;
+        }catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateUserRole(long id, Role role) {
+        try(PreparedStatement ps = connection.prepareCall(UPDATE_USER_ROLE)) {
+            ps.setString( 1, role.name());
+            ps.setString( 2, String.valueOf(id));
+            ps.executeUpdate();
         }catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
