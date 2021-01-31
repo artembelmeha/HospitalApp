@@ -20,6 +20,14 @@
                 <a class="navbar-brand" href="${pageContext.request.contextPath}/">Modern Hospital LLC</a>
             </div>
             <ul>
+                <c:set var = "role" value = "${fn:toLowerCase(user.role)}" />
+                <c:if test="${not empty user}">
+                    <li>
+                        <a href="/api/${role}/success.jsp"> <fmt:message key="header.userInfo"/> </a>
+                    </li>
+                </c:if>
+            </ul>
+            <ul>
                 <c:if test="${fn:contains(pageContext.request.requestURI, 'admin')}">
                     <li>
                         <a href="@{/users/undefine}"> <fmt:message key="login.users"/> </a>

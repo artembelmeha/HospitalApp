@@ -23,7 +23,7 @@ public class AuthFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        String contextPath = req.getContextPath();
+        String contextPath = req.getContextPath().toLowerCase();
         String path = req.getRequestURI().toLowerCase();
         String mod = path.replaceFirst(".*api/","");
         UserDto currentUser = (UserDto) session.getAttribute("user");
