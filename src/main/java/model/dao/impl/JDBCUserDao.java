@@ -1,20 +1,19 @@
 package model.dao.impl;
 
 import exception.EntityNotFoundException;
-import exception.ErrorMessageKeysContainedException;
 import exception.UnknownSqlException;
+import model.dao.UserDao;
 import model.dao.mapper.UserMapper;
-import model.dto.UserDto;
 import model.entity.Role;
 import model.entity.User;
-import model.dao.UserDao;
 import org.apache.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static model.entity.Role.UNDEFINE;
 
 public class JDBCUserDao implements UserDao {
 
@@ -24,6 +23,8 @@ public class JDBCUserDao implements UserDao {
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
+    public static final String USERS_WHERE_ROLE = "SELECT * FROM users WHERE role = ?";
+    public static final String FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
 
     private Connection connection;
 
@@ -84,7 +85,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findUserByEmail(String email) {
-        try(PreparedStatement ps = connection.prepareCall("SELECT * FROM users WHERE email = ?")){
+        try(PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_EMAIL)){
             ps.setString( 1, email);
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
@@ -100,7 +101,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> getUsersByRole(Role role) {
-        try(PreparedStatement ps = connection.prepareCall("SELECT * FROM users WHERE role = ?")) {
+        try(PreparedStatement ps = connection.prepareCall(USERS_WHERE_ROLE)) {
             List<User> users = new ArrayList<>();
             ps.setString( 1, role.name());
             ResultSet rs = ps.executeQuery();

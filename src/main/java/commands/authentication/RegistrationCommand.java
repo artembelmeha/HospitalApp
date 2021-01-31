@@ -11,6 +11,7 @@ import utils.EncryptUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import static commands.authentication.Constants.*;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(RegistrationCommand.class);
@@ -18,10 +19,10 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request) {
         UserService userService = ServiceFactory.getInstance().getUserService();
         HttpSession session = request.getSession();
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String lastName = request.getParameter("lastName");
-        String firstName = request.getParameter("firstName");
+        String email = request.getParameter(EMAIL);
+        String password = request.getParameter(PASSWORD);
+        String lastName = request.getParameter(LAST_NAME);
+        String firstName = request.getParameter(FIRST_NAME);
 
         try{
             User user = userService.getUserByEmail(email);
@@ -30,11 +31,11 @@ public class RegistrationCommand implements Command {
             }
         } catch (UnknownSqlException e){
             LOGGER.error(e.getMessage());
-            session.setAttribute("error", e.getMessage());
-            return "/registration.jsp";
+            session.setAttribute(ERROR, e.getMessage());
+            return PAGE_REGISTRATION;
         }
         userService.create(new UserDto(firstName, lastName,email,EncryptUtil.encryptString(password)));
-        return "/login.jsp";
+        return PAGE_LOGIN;
 
     }
 }

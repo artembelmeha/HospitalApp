@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static commands.authentication.Constants.*;
 import static model.entity.Role.ADMIN;
 
 public class LoginCommand implements Command {
@@ -21,25 +22,25 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         UserService userService = ServiceFactory.getInstance().getUserService();
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String email = request.getParameter(EMAIL);
+        String password = request.getParameter(PASSWORD);
         HttpSession session = request.getSession();
         if( email == null || email.equals("") || password == null || password.equals("")  ){
-            return "/login.jsp";
+            return PAGE_LOGIN;
         }
         try {
             userService.signIn(email, password);
             UserDto currentUser = new UserDto(userService.getUserByEmail(email));
             System.out.println(currentUser);
-            session.setAttribute("user", currentUser);
+            session.setAttribute(USER, currentUser);
             if (currentUser.getRole().equals(ADMIN)){
-                return "redirect:/admin/success.jsp";
+                return REDIRECT_ADMIN_SUCCESS;
             }
-            return "redirect:/doctor/success.jsp";
+            return REDIRECT_DOCTOR_SUCCESS;
         } catch (UnknownSqlException  e) {
             LOGGER.error("Error caught while executing the method:", e);
             session.setAttribute("login_fails", e.getMessage());
-            return "/login.jsp";
+            return PAGE_LOGIN;
         }
     }
 }
