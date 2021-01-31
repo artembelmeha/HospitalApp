@@ -36,5 +36,7 @@ public interface Constants {
     public static final String REDIRECT_ADMIN_PATIENTS = PREFIX_REDIRECT+"/admin/patients.jsp";
 
     public static final String REDIRECT_DOCTOR_SUCCESS = PREFIX_REDIRECT+"/doctor/success.jsp";
+    public static final String REDIRECT_DOCTOR_PATIENTS = PREFIX_REDIRECT+"/doctor/patients.jsp";
+
     public static final String REDIRECT_INDEX = PREFIX_REDIRECT+"/index.jsp";
 }

@@ -64,6 +64,13 @@ public class UserService {
             return userDao.create(user);
         }
     }
-
-
+    public List<User> getUsersByDoctorId(long id) {
+        try(UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.getUserByDoctorId(id);
+        } catch (EntityNotFoundException |UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
+        }
+    }
 }

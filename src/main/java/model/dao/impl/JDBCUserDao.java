@@ -16,15 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCUserDao implements UserDao {
+    private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
+
 
     private static final String INSERT_TEMPLATE =
             "INSERT INTO users (email, first_name, on_treatment, last_name, " +
                     "password, role, telephone_number, patients_number) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
     public static final String USERS_WHERE_ROLE = "SELECT * FROM users WHERE role = ?";
     public static final String FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
+    public static final String FROM_USERS_WHERE_DOCTOR_ID = "SELECT * FROM users WHERE doctor_id = ?";
 
     private Connection connection;
 
@@ -108,6 +109,23 @@ public class JDBCUserDao implements UserDao {
             UserMapper userMapper = new UserMapper();
             while (rs.next()) {
                  users.add(userMapper.extractFromResultSet(rs));
+            }
+            return users;
+        }catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<User> getUserByDoctorId(long id) {
+        try(PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_DOCTOR_ID)) {
+            List<User> users = new ArrayList<>();
+            ps.setString( 1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            while (rs.next()) {
+                users.add(userMapper.extractFromResultSet(rs));
             }
             return users;
         }catch (Exception e) {
