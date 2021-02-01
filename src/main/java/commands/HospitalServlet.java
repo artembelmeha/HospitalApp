@@ -1,12 +1,10 @@
 package commands;
 
-import commands.Command;
 import commands.authentication.ErrorCommand;
 import commands.authentication.LoginCommand;
 import commands.authentication.LogoutCommand;
 import commands.authentication.RegistrationCommand;
 import commands.user.*;
-import service.UserService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -36,6 +34,7 @@ public class HospitalServlet extends HttpServlet {
         commands.put("admin/patient", new ShowPatientById());
         commands.put("doctor/patients", new ShowPatients());
         commands.put("admin/assignAsNurse", new AssignAsNurse());
+        commands.put("admin/registerAsDoctor", new RegisterAsDoctorPage());
 
     }
 

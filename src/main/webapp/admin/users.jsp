@@ -45,13 +45,16 @@
                                 <a>${user.email}</a>
                             </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/assignAsNurse?id=${user.id}"> <fmt:message key="list.signAsNurse"/></a>
+                            <a href="${pageContext.request.contextPath}/admin/assignAsNurse?id=${user.id}">
+                                <fmt:message key="list.signAsNurse"/></a>
                         </td>
                         <td>
-                            <a href="@{|/users/appoint/doctor/${user.id}|}"><fmt:message key="list.signAsDoctor"/></a>
+                            <a href="${pageContext.request.contextPath}/admin/registerAsDoctor?id=${user.id}">
+                                <fmt:message key="list.signAsDoctor"/></a>
                         </td>
                         <td>
-                            <a href="@{|/users/appoint/patient/${user.id}|}" ><fmt:message key="list.signAsPatient"/></a>
+                            <a href="${pageContext.request.contextPath}/admin/registerAsPatient?id=${user.id}">
+                                <fmt:message key="list.signAsPatient"/></a>
                         </tr>
                     </c:forEach>
                 </table>

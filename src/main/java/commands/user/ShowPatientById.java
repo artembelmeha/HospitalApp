@@ -18,7 +18,7 @@ public class ShowPatientById implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        long patientId = Long.parseLong(request.getParameterValues("id")[0]);
+        long patientId = Long.parseLong(request.getParameterValues(ID)[0]);
         HttpSession session = request.getSession();
         User user = userService.getUserById(patientId);
         User doctor = userService.getUserById(user.getDoctorId());
