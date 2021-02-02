@@ -2,13 +2,8 @@ package service;
 
 import model.dao.DaoFactory;
 import model.dao.MedicalCardDao;
-import model.dao.UserDao;
-import model.dto.UserDto;
 import model.entity.MedicalCard;
-import model.entity.User;
 import org.apache.log4j.Logger;
-
-import static model.entity.Role.UNDEFINE;
 
 public class MedicalCardService {
 
@@ -18,7 +13,10 @@ public class MedicalCardService {
         MedicalCard medicalCard = new MedicalCard();
         medicalCard.setFinalDiagnosis(keyWord);
         try (MedicalCardDao medicalCardDao = DaoFactory.getInstance().createMedicalCardDao()){
-            return medicalCardDao.create(medicalCard);
+            MedicalCard createdMC = medicalCardDao.create(medicalCard);
+            LOGGER.info("Medical card #[" + createdMC.getId() + "] was successful created." );
+            return createdMC;
+
         }
     }
 }

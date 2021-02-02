@@ -7,6 +7,7 @@ import model.dao.UserDao;
 import model.dto.DoctorDto;
 import model.dto.PatientDto;
 import model.dto.UserDto;
+import model.entity.MedicalCard;
 import model.entity.Role;
 import model.entity.User;
 import org.apache.log4j.Logger;
@@ -33,6 +34,7 @@ public class UserService {
             throw new UnknownSqlException("error.wrongPassword");
         } catch (UnknownSqlException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
             throw e;
         }
     }
@@ -94,6 +96,7 @@ public class UserService {
     public void assignAsNurse(long id) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.updateUserRole(id, NURSE);
+            LOGGER.info("User #[" + id + "] was successfully assigned as nurse");
         } catch (EntityNotFoundException | UnknownSqlException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
@@ -112,13 +115,15 @@ public class UserService {
 
     public void assignAsPatient(PatientDto patientDto) {
         if (patientDto.getCardId() == 0) {
-            long cardId = medicalCardService.create(String.valueOf(patientDto.hashCode())).getId();
-            patientDto.setCardId(cardId);
+            MedicalCard medicalCard = medicalCardService.create(String.valueOf(patientDto.getId()));
+            patientDto.setCardId(medicalCard.getId());
         }
+
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.updateUserToPatient(patientDto);
             User doctor = userDao.findById(patientDto.getDoctorId());
             userDao.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() + 1);
+            LOGGER.info("User #[" + patientDto.getId() + "] was successfully assigned as patient");
         } catch (EntityNotFoundException | UnknownSqlException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());

@@ -29,9 +29,9 @@ public class AssignAsPatient implements Command {
 
         if (currentUser.getRole() == Role.ADMIN) {
             PatientDto patientDto = (PatientDto) session.getAttribute(PATIENT);
-            patientDto.setBirthDate(LocalDate.parse(request.getParameter("birthDate")));
-            patientDto.setTelephoneNumber(request.getParameter("telephoneNumber"));
-            patientDto.setSex(Sex.valueOf(request.getParameter("sex")));
+            patientDto.setBirthDate(LocalDate.parse(request.getParameter(BIRTH_DATE)));
+            patientDto.setTelephoneNumber(request.getParameter(TELEPHONE_NUMBER));
+            patientDto.setSex(Sex.valueOf(request.getParameter(SEX)));
             patientDto.setDoctorId(Long.parseLong(request.getParameter(DOCTOR)));
             userService.assignAsPatient(patientDto);
             return HREF_LIST_OF_PATIENTS;

@@ -21,7 +21,7 @@ public class RegisterAsDoctorPage implements Command {
         HttpSession session = request.getSession();
         UserDto currentUser = (UserDto) session.getAttribute(USER);
         if(currentUser.getRole() == Role.ADMIN) {
-            long userId = Long.parseLong(request.getParameterValues("id")[0]);
+            long userId = Long.parseLong(request.getParameterValues(ID)[0]);
             DoctorDto doctor = new DoctorDto(userService.getUserById(userId));
             session.setAttribute(DOCTOR, doctor);
             return REDIRECT_ADMIN_REGISTER_DOCTOR;

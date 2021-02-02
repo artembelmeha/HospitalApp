@@ -2,15 +2,19 @@ package commands;
 
 public interface Constants {
     public static final String EMAIL = "email";
+    public static final String EMPTY_STRING = "";
     public static final String PASSWORD = "password";
     public static final String USER = "user";
     public static final String ID = "id";
+    public static final String SEX = "sex";
     public static final String LAST_NAME = "lastName";
     public static final String FIRST_NAME = "firstName";
     public static final String ERROR = "error";
     public static final String UNDEFINED = "undefined";
     public static final String NURSES = "nurses";
     public static final String DOCTORS = "doctors";
+    public static final String TELEPHONE_NUMBER = "telephoneNumber";
+    public static final String BIRTH_DATE = "birthDate";
     public static final String DOCTOR = "doctor";
     public static final String PATIENTS = "patients";
     public static final String PATIENT = "patient";

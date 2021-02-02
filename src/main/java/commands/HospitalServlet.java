@@ -5,6 +5,7 @@ import commands.authentication.LoginCommand;
 import commands.authentication.LogoutCommand;
 import commands.authentication.RegistrationCommand;
 import commands.user.*;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,8 +16,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import static commands.Constants.*;
 
 public class HospitalServlet extends HttpServlet {
+
+    private static final Logger LOGGER = Logger.getLogger(HospitalServlet.class);
+
     private Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig){
@@ -55,13 +60,13 @@ public class HospitalServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/api/" , "");
-        path = path.replaceAll(".jsp","");
+        path = path.replaceAll(".*/api/" , EMPTY_STRING);
+        path = path.replaceAll(".jsp",EMPTY_STRING);
         Command command = commands.getOrDefault(path , (r)->"/index.jsp");
-        System.out.println(command.getClass().getName());
+        LOGGER.info(command.getClass().getName());
         String page = command.execute(request);
-        if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/api"));
+        if(page.contains(PREFIX_REDIRECT)){
+            response.sendRedirect(page.replace(PREFIX_REDIRECT, "/api"));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }

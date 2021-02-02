@@ -25,7 +25,7 @@ public class RegisterAsPatientPage implements Command {
         HttpSession session = request.getSession();
         UserDto currentUser = (UserDto) session.getAttribute(USER);
         if(currentUser.getRole() == Role.ADMIN) {
-            long userId = Long.parseLong(request.getParameterValues("id")[0]);
+            long userId = Long.parseLong(request.getParameterValues(ID)[0]);
             PatientDto patient = new PatientDto(userService.getUserById(userId));
             List<DoctorDto> doctors = userService.getUsersByRole(Role.DOCTOR).stream()
                     .map(DoctorDto::new)

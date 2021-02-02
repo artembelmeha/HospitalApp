@@ -24,7 +24,7 @@ public class LoginCommand implements Command {
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         HttpSession session = request.getSession();
-        if( email == null || email.equals("") || password == null || password.equals("")  ){
+        if( email == null || email.equals(EMPTY_STRING) || password == null || password.equals(EMPTY_STRING)  ){
             return PAGE_LOGIN;
         }
         try {
