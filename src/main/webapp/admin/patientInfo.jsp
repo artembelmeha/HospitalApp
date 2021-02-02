@@ -24,6 +24,7 @@
 <body style ="background: #eee;">
 <jsp:include page="../header.jsp"/>
     <div class="m-5 p-1">
+        <h2><fmt:message key="patient.info"/></h2>
         <br>
         <p><fmt:message key="login.firstName"/>  :   ${patient.firstName}</p>
         <p><fmt:message key="login.lastName"/>  :   ${patient.lastName}</p>
@@ -40,7 +41,7 @@
         <p><fmt:message key="patient.sex"/>  :   <fmt:message key="${sex}"/> </p>
 
         <p><fmt:message key="patient.doctor"/>  :   ${doctorFullName},  <fmt:message key="qualification.${fn:toLowerCase(qualification)}"/> </p>
-        <a href="/${user.role}/card?id=${patient.cardId}"><fmt:message key="patient.medicalCard"/></a>
+        <a href="/api/admin/medicalCard?id=${patient.cardId}"><fmt:message key="patient.medicalCard"/></a>
     </div>
 </body>
 </html>

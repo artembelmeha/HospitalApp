@@ -4,6 +4,7 @@ import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.MedicalCardDao;
 import model.dao.mapper.MedicalCardMapper;
+import model.dao.mapper.UserMapper;
 import model.entity.MedicalCard;
 import org.apache.log4j.Logger;
 
@@ -21,6 +22,8 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
     private static final String INSERT_TEMPLATE = "INSERT INTO cards (final_diagnosis) VALUES (?)";
     public static final String CARDS_DIAGNOSIS = "SELECT * FROM cards WHERE final_diagnosis = ?";
     private static final String UPDATE_CARD = "UPDATE cards SET final_diagnosis = ? WHERE id = ?";
+    public static final String FROM_CARDS_WHERE_ID = "SELECT * FROM cards WHERE id = ?";
+
 
     public JDBCMedicalCardDao(Connection connection) {
         this.connection = connection;
@@ -60,7 +63,19 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
 
     @Override
     public MedicalCard findById(long id) {
-        return null;
+        try (PreparedStatement ps = connection.prepareCall(FROM_CARDS_WHERE_ID)) {
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            MedicalCardMapper medicalCardMapper = new MedicalCardMapper();
+            if (rs.next()) {
+                return medicalCardMapper.extractFromResultSet(rs);
+            }
+            LOGGER.error("There is no medical card with id [" + id + "]");
+            throw new EntityNotFoundException("There is no medical card with id [" + id + "]");
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
     }
 
     @Override

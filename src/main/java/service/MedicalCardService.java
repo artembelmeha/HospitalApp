@@ -1,8 +1,12 @@
 package service;
 
+import exception.EntityNotFoundException;
+import exception.UnknownSqlException;
 import model.dao.DaoFactory;
 import model.dao.MedicalCardDao;
+import model.dao.UserDao;
 import model.entity.MedicalCard;
+import model.entity.User;
 import org.apache.log4j.Logger;
 
 public class MedicalCardService {
@@ -17,6 +21,16 @@ public class MedicalCardService {
             LOGGER.info("Medical card #[" + createdMC.getId() + "] was successful created." );
             return createdMC;
 
+        }
+    }
+
+    public MedicalCard getMedicalCardById(long id) {
+        try (MedicalCardDao medicalCardDao = DaoFactory.getInstance().createMedicalCardDao()) {
+            return medicalCardDao.findById(id);
+        } catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
         }
     }
 }

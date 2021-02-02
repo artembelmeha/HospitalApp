@@ -9,6 +9,7 @@ public interface Constants {
     public static final String SEX = "sex";
     public static final String LAST_NAME = "lastName";
     public static final String FIRST_NAME = "firstName";
+    public static final String MEDICAL_CARD = "medicalCard";
     public static final String ERROR = "error";
     public static final String UNDEFINED = "undefined";
     public static final String NURSES = "nurses";
@@ -52,6 +53,7 @@ public interface Constants {
     public static final String REDIRECT_ADMIN_PATIENT_INFO = PREFIX_REDIRECT+"/admin/patientInfo.jsp";
     public static final String REDIRECT_ADMIN_REGISTER_DOCTOR = PREFIX_REDIRECT+"/admin/registerDoctor.jsp";
     public static final String REDIRECT_ADMIN_REGISTER_PATIENT = PREFIX_REDIRECT+"/admin/registerPatient.jsp";
+    public static final String REDIRECT_ADMIN_MEDICAL_CARD = PREFIX_REDIRECT+"/admin/medicalCard.jsp";
 
 
     public static final String REDIRECT_DOCTOR_SUCCESS = PREFIX_REDIRECT+"/doctor/success.jsp";
