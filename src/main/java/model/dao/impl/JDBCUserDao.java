@@ -4,14 +4,13 @@ import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.UserDao;
 import model.dao.mapper.UserMapper;
+import model.dto.DoctorDto;
+import model.dto.PatientDto;
 import model.entity.Role;
 import model.entity.User;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +27,11 @@ public class JDBCUserDao implements UserDao {
     public static final String FROM_USERS_WHERE_DOCTOR_ID = "SELECT * FROM users WHERE doctor_id = ?";
     public static final String FROM_USERS_WHERE_ID = "SELECT * FROM users WHERE id = ?";
     private static final String UPDATE_USER_ROLE = "UPDATE users SET role = ? WHERE id = ?";
+    private static final String UPDATE_USER_TO_DOCTOR = "UPDATE users SET role = ?, qualification = ?, " +
+            "patients_number = ? WHERE id = ?";
+    private static final String UPDATE_DOCTORS_PATIENTS_NUMBER = "UPDATE users SET patients_number = ? WHERE id = ?";
+    private static final String UPDATE_USER_TO_PATIENT = "UPDATE users SET role = ?, birth_date = ?, " +
+            "on_treatment = ?, sex = ?, telephone_number = ?, doctor_id = ?, card_id = ? WHERE id = ?";
 
     private Connection connection;
 
@@ -37,7 +41,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User create(User user) {
-        try(PreparedStatement ps = connection.prepareCall(INSERT_TEMPLATE)) {
+        try (PreparedStatement ps = connection.prepareCall(INSERT_TEMPLATE)) {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getFirstName());
             ps.setBoolean(3, user.isOnTreatment());
@@ -47,26 +51,26 @@ public class JDBCUserDao implements UserDao {
             ps.setString(7, user.getTelephoneNumber());
             ps.setInt(8, user.getPatientsNumber());
             ps.execute();
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
         User savedUser = this.findUserByEmail(user.getEmail());
-        LOGGER.debug("User with id [ "+savedUser.getId()+" ] successfully saved.");
+        LOGGER.debug("User with id [ " + savedUser.getId() + " ] successfully saved.");
         return savedUser;
     }
 
 
     @Override
     public User findById(long id) {
-        try(PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_ID)){
-            ps.setString( 1, String.valueOf(id));
+        try (PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_ID)) {
+            ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
-            if(rs.next()) {
+            if (rs.next()) {
                 return userMapper.extractFromResultSet(rs);
             }
-            throw new EntityNotFoundException("There is no user with id ["+id+"]");
+            throw new EntityNotFoundException("There is no user with id [" + id + "]");
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
@@ -99,11 +103,11 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findUserByEmail(String email) {
-        try(PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_EMAIL)){
-            ps.setString( 1, email);
+        try (PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_EMAIL)) {
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
-            if(rs.next()) {
+            if (rs.next()) {
                 return userMapper.extractFromResultSet(rs);
             }
             throw new EntityNotFoundException("error.wrongCredential");
@@ -115,16 +119,16 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> getUsersByRole(Role role) {
-        try(PreparedStatement ps = connection.prepareCall(USERS_WHERE_ROLE)) {
+        try (PreparedStatement ps = connection.prepareCall(USERS_WHERE_ROLE)) {
             List<User> users = new ArrayList<>();
-            ps.setString( 1, role.name());
+            ps.setString(1, role.name());
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
             while (rs.next()) {
-                 users.add(userMapper.extractFromResultSet(rs));
+                users.add(userMapper.extractFromResultSet(rs));
             }
             return users;
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
@@ -132,16 +136,16 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> getUserByDoctorId(long id) {
-        try(PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_DOCTOR_ID)) {
+        try (PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_DOCTOR_ID)) {
             List<User> users = new ArrayList<>();
-            ps.setString( 1, String.valueOf(id));
+            ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
             while (rs.next()) {
                 users.add(userMapper.extractFromResultSet(rs));
             }
             return users;
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
@@ -149,11 +153,55 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void updateUserRole(long id, Role role) {
-        try(PreparedStatement ps = connection.prepareCall(UPDATE_USER_ROLE)) {
-            ps.setString( 1, role.name());
-            ps.setString( 2, String.valueOf(id));
+        try (PreparedStatement ps = connection.prepareCall(UPDATE_USER_ROLE)) {
+            ps.setString(1, role.name());
+            ps.setLong(2, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateUserToDoctor(DoctorDto doctorDto) {
+        try (PreparedStatement ps = connection.prepareCall(UPDATE_USER_TO_DOCTOR)) {
+            ps.setString(1, Role.DOCTOR.name());
+            ps.setString(2, doctorDto.getQualification().name());
+            ps.setInt(3, doctorDto.getPatientsNumber());
+            ps.setLong(4, doctorDto.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateUserToPatient(PatientDto patientDto) {
+        try(PreparedStatement ps = connection.prepareCall(UPDATE_USER_TO_PATIENT)) {
+            ps.setString( 1, Role.PATIENT.name());
+            ps.setDate( 2, Date.valueOf(patientDto.getBirthDate()));
+            ps.setBoolean(3, patientDto.getIsOnTreatment());
+            ps.setString(4, patientDto.getSex().name());
+            ps.setString(5, patientDto.getTelephoneNumber());
+            ps.setLong( 6, patientDto.getDoctorId());
+            ps.setLong( 7, patientDto.getCardId());
+            ps.setLong( 8, patientDto.getId());
             ps.executeUpdate();
         }catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateDoctorPatientsNumber(Long id, int patientsNumber) {
+        try (PreparedStatement ps = connection.prepareCall(UPDATE_DOCTORS_PATIENTS_NUMBER)) {
+            ps.setString( 1, String.valueOf(patientsNumber));
+            ps.setLong( 2, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }

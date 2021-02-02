@@ -4,6 +4,7 @@ public class ServiceFactory {
     private static ServiceFactory instance = new ServiceFactory();
 
     private UserService userService;
+    private MedicalCardService cardService;
 
     private ServiceFactory() {
     }
@@ -17,5 +18,12 @@ public class ServiceFactory {
             userService = new UserService();
         }
         return userService;
+    }
+
+    public MedicalCardService getCardService() {
+        if(cardService == null) {
+            cardService = new MedicalCardService();
+        }
+        return cardService;
     }
 }

@@ -27,11 +27,11 @@ public interface Constants {
     public static final String PAGE_LOGIN = "/login.jsp";
     public static final String PAGE_ERROR = "/api/access_denied.jsp";
     public static final String PAGE_REGISTRATION = "/registration.jsp";
-    public static final String PAGE_ADMIN_REGISTER_DOCTOR = "/admin/registerDoctor.jsp";
 
 
     public static final String HREF_LIST_OF_NURSES = "/api/admin/nurses";
     public static final String HREF_LIST_OF_DOCTORS = "/api/admin/doctors";
+    public static final String HREF_LIST_OF_PATIENTS = "/api/admin/patients";
 
 
 
@@ -47,6 +47,7 @@ public interface Constants {
     public static final String REDIRECT_ADMIN_PATIENTS = PREFIX_REDIRECT+"/admin/patients.jsp";
     public static final String REDIRECT_ADMIN_PATIENT_INFO = PREFIX_REDIRECT+"/admin/patientInfo.jsp";
     public static final String REDIRECT_ADMIN_REGISTER_DOCTOR = PREFIX_REDIRECT+"/admin/registerDoctor.jsp";
+    public static final String REDIRECT_ADMIN_REGISTER_PATIENT = PREFIX_REDIRECT+"/admin/registerPatient.jsp";
 
 
     public static final String REDIRECT_DOCTOR_SUCCESS = PREFIX_REDIRECT+"/doctor/success.jsp";

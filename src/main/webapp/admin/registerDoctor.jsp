@@ -27,7 +27,7 @@
 
         <h2><fmt:message key="doctor.doctorRegistration"/></h2>
         <br>
-        <form method="POST" action="@{|/users/doctor/define/qualification/${user.id}|}">
+        <form method="POST" action="/api/admin/assignAsDoctor">
             <table>
                 <tr>
                     <td>
@@ -46,7 +46,6 @@
                     </td>
                 </tr>
                 <tr>
-                <tr>
                     <td>
                         <label><fmt:message key="login.email"/>:</label>
                     </td>
@@ -60,9 +59,11 @@
                     </td>
                     <td>
                         <c:set var="enumValues" value="<%=Qualification.values()%>"/>
-                            <select>
+                            <select name="qualification">
                                 <c:forEach items="${enumValues}" var="enumValue">
-                                     <option><fmt:message key="qualification.${fn:toLowerCase(enumValue.name())}"/></option>
+                                     <option value="${enumValue}" }>
+                                         <fmt:message key="qualification.${fn:toLowerCase(enumValue.name())}"/>
+                                     </option>
                                 </c:forEach>
                             </select>
                     </td>

@@ -34,7 +34,10 @@ public class HospitalServlet extends HttpServlet {
         commands.put("admin/patient", new ShowPatientById());
         commands.put("doctor/patients", new ShowPatients());
         commands.put("admin/assignAsNurse", new AssignAsNurse());
+        commands.put("admin/assignAsDoctor", new AssignAsDoctor());
+        commands.put("admin/assignAsPatient", new AssignAsPatient());
         commands.put("admin/registerAsDoctor", new RegisterAsDoctorPage());
+        commands.put("admin/registerAsPatient", new RegisterAsPatientPage());
 
     }
 
