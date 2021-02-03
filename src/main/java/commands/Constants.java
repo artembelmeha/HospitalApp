@@ -6,6 +6,7 @@ public interface Constants {
     public static final String PASSWORD = "password";
     public static final String USER = "user";
     public static final String ID = "id";
+    public static final String DATE = "date";
     public static final String SEX = "sex";
     public static final String LAST_NAME = "lastName";
     public static final String FIRST_NAME = "firstName";
@@ -21,6 +22,7 @@ public interface Constants {
     public static final String PATIENT = "patient";
     public static final String DOCTOR_FULL_NAME = "doctorFullName";
     public static final String QUALIFICATION = "qualification";
+    public static final String ASSIGNMENTS = "assignments";
 
 
 

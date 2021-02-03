@@ -5,6 +5,7 @@ public class ServiceFactory {
 
     private UserService userService;
     private MedicalCardService cardService;
+    private AssignmentService assignmentService;
 
     private ServiceFactory() {
     }
@@ -25,5 +26,12 @@ public class ServiceFactory {
             cardService = new MedicalCardService();
         }
         return cardService;
+    }
+
+    public AssignmentService getAssignmentService() {
+        if (assignmentService == null) {
+            assignmentService = new AssignmentService();
+        }
+        return assignmentService;
     }
 }

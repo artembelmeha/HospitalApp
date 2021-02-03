@@ -54,23 +54,37 @@
 <%--        </form>--%>
 
 
-<%--        <br>--%>
-<%--        <table border="1">--%>
-<%--            <tr>--%>
-<%--                <th th:text="#{list.no}">No.</th>--%>
-<%--                <th th:text="#{medicalCard.currentDiagnosis}">Current Diagnosis</th>--%>
-<%--                <th th:text="#{medicalCard.isComplete}">Is Complete</th>--%>
-<%--                <th th:text="#{assignment.action}">Action</th>--%>
+        <br>
+        <table border="1">
+            <tr>
+                <th><fmt:message key="list.no"/></th>
+                <th><fmt:message key="medicalCard.currentDiagnosis"/></th>
+                <th><fmt:message key="medicalCard.isComplete"/></th>
+                <th><fmt:message key="assignment.action"/></th>
+            </tr>
+            <c:forEach items="${assignments}" var="assignment" varStatus="theCount">
+                <tr>
+                    <td>
+                        <c:out value="${theCount.count}"/>
+                    </td>
+                    <td>
+                        <c:out value="${assignment.currentDiagnosis}"/>
+                    </td>
+                    <td>
+<%--                        <c:out value="${assignment.isComplete}"/>--%>
+                        <fmt:message key="patient.${assignment.isComplete}"/>
+                    </td>
+                    <td>
+                        <a href="@{|/assignment/view/${assignment.id}|}" ><fmt:message key="assignment.open"/></a>
+                    </td>
 
-<%--            </tr>--%>
+                </tr>
+            </c:forEach>
 <%--            <tr th:each="assignment, iStat: ${medicalCard.assignmentList}">--%>
 <%--                <td th:text="${iStat.index + 1}"/>--%>
 <%--                <td th:text="${assignment.currentDiagnosis}">--%>
 <%--                <td th:text="#{'patient.'+${assignment.isComplete}}">--%>
-<%--                <td>--%>
-<%--                    <a th:href="@{|/assignment/view/${assignment.id}|}" th:text="#{assignment.open}">Open Assignment</a>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
+
         </table>
 
     </div>

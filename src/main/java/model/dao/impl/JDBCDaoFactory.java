@@ -1,8 +1,6 @@
 package model.dao.impl;
 
-import model.dao.DaoFactory;
-import model.dao.MedicalCardDao;
-import model.dao.UserDao;
+import model.dao.*;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -24,6 +22,16 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public MedicalCardDao createMedicalCardDao() {
         return new JDBCMedicalCardDao(getConnection());
+    }
+
+    @Override
+    public AssignmentDao createAssignmentDao() {
+        return new JDBCAssignmentDao(getConnection());
+    }
+
+    @Override
+    public AssignmentNursehelperDao createAssignmentNursehelperDao() {
+        return new JDBCAssignmentNursehelperDao(getConnection());
     }
 
     private Connection getConnection(){
