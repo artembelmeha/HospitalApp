@@ -1,5 +1,6 @@
 package commands;
 
+import commands.assignment.AssignmentInfo;
 import commands.authentication.ErrorCommand;
 import commands.authentication.LoginCommand;
 import commands.authentication.LogoutCommand;
@@ -38,13 +39,20 @@ public class HospitalServlet extends HttpServlet {
         commands.put("admin/doctors", new ShowDoctors());
         commands.put("admin/patients", new ShowPatients());
         commands.put("admin/patient", new ShowPatientById());
+        commands.put("doctor/patient", new ShowPatientById());
+        commands.put("nurse/patient", new ShowPatientById());
         commands.put("admin/medicalCard", new ShowMedicalCard());
+        commands.put("doctor/medicalCard", new ShowMedicalCard());
+        commands.put("nurse/medicalCard", new ShowMedicalCard());
         commands.put("doctor/patients", new ShowPatients());
         commands.put("admin/assignAsNurse", new AssignAsNurse());
         commands.put("admin/assignAsDoctor", new AssignAsDoctor());
         commands.put("admin/assignAsPatient", new AssignAsPatient());
         commands.put("admin/registerAsDoctor", new RegisterAsDoctorPage());
         commands.put("admin/registerAsPatient", new RegisterAsPatientPage());
+        commands.put("admin/assignmentInfo", new AssignmentInfo());
+        commands.put("doctor/assignmentInfo", new AssignmentInfo());
+        commands.put("nurse/assignmentInfo", new AssignmentInfo());
 
     }
 

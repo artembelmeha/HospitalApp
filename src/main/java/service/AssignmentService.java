@@ -22,4 +22,14 @@ public class AssignmentService {
             throw new UnknownSqlException();
         }
     }
+
+    public Assignment getAssignmentById(long id) {
+        try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
+            return assignmentDao.findById(id);
+        } catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
+        }
+    }
 }

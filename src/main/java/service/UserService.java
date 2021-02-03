@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import utils.EncryptUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static model.entity.Role.NURSE;
 import static model.entity.Role.UNDEFINE;
@@ -127,6 +128,18 @@ public class UserService {
         } catch (EntityNotFoundException | UnknownSqlException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
+        }
+    }
+
+    public List<UserDto> getNursesByAssignmentID(long id) {
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.getNurserByAssignmentID(id).stream()
+                    .map(UserDto::new)
+                    .collect(Collectors.toList());
+        } catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
         }
     }
 }

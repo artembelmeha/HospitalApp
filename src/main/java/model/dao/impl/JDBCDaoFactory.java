@@ -1,11 +1,11 @@
 package model.dao.impl;
 
+import exception.UnknownSqlException;
 import model.dao.*;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
@@ -39,7 +39,7 @@ public class JDBCDaoFactory extends DaoFactory {
             return dataSource.getConnection();
         } catch (SQLException e) {
             LOGGER.error("Sorry, something went wrong!", e);
-            throw new RuntimeException(e);
+            throw new UnknownSqlException(e.getMessage());
         }
     }
 }

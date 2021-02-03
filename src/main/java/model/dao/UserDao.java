@@ -24,4 +24,6 @@ public interface UserDao extends GenericDao<User>{
     void updateUserToPatient(PatientDto patientDto);
 
     void updateDoctorPatientsNumber(Long id, int patientsNumber);
+
+    List<User> getNurserByAssignmentID(long id);
 }

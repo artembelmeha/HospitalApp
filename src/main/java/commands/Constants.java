@@ -14,6 +14,7 @@ public interface Constants {
     public static final String ERROR = "error";
     public static final String UNDEFINED = "undefined";
     public static final String NURSES = "nurses";
+    public static final String FREE_NURSES = "freeNurses";
     public static final String DOCTORS = "doctors";
     public static final String TELEPHONE_NUMBER = "telephoneNumber";
     public static final String BIRTH_DATE = "birthDate";
@@ -23,6 +24,7 @@ public interface Constants {
     public static final String DOCTOR_FULL_NAME = "doctorFullName";
     public static final String QUALIFICATION = "qualification";
     public static final String ASSIGNMENTS = "assignments";
+    public static final String ASSIGNMENT = "assignment";
 
 
 
@@ -56,10 +58,14 @@ public interface Constants {
     public static final String REDIRECT_ADMIN_REGISTER_DOCTOR = PREFIX_REDIRECT+"/admin/registerDoctor.jsp";
     public static final String REDIRECT_ADMIN_REGISTER_PATIENT = PREFIX_REDIRECT+"/admin/registerPatient.jsp";
     public static final String REDIRECT_ADMIN_MEDICAL_CARD = PREFIX_REDIRECT+"/admin/medicalCard.jsp";
+    public static final String REDIRECT_ADMIN_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/admin/assignmentInfo.jsp";
 
 
     public static final String REDIRECT_DOCTOR_SUCCESS = PREFIX_REDIRECT+"/doctor/success.jsp";
     public static final String REDIRECT_DOCTOR_PATIENTS = PREFIX_REDIRECT+"/doctor/patients.jsp";
+    public static final String REDIRECT_DOCTOR_PATIENT_INFO = PREFIX_REDIRECT+"/doctor/patientInfo.jsp";
+    public static final String REDIRECT_DOCTOR_MEDICAL_CARD = PREFIX_REDIRECT+"/doctor/medicalCard.jsp";
+    public static final String REDIRECT_DOCTOR_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/doctor/assignmentInfo.jsp";
 
     public static final String REDIRECT_INDEX = PREFIX_REDIRECT+"/index.jsp";
 }

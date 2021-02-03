@@ -52,7 +52,7 @@
                         <c:out value="${patient.email}"/>
                     </td>
                     <td>
-                        <a href="/api/admin/patient?id=${patient.id}">
+                        <a href="/api/doctor/patient?id=${patient.id}">
                             <fmt:message key="patient.info"/>
                         </a>
                     </td>

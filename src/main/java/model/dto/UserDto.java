@@ -3,6 +3,8 @@ package model.dto;
 import model.entity.Role;
 import model.entity.User;
 
+import java.util.Objects;
+
 public class UserDto {
 
     private long id;
@@ -89,5 +91,18 @@ public class UserDto {
                 ", role=" + role +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return getId() == userDto.getId() && Objects.equals(getFirstName(), userDto.getFirstName()) && Objects.equals(getLastName(), userDto.getLastName()) && Objects.equals(getEmail(), userDto.getEmail()) && getRole() == userDto.getRole() && Objects.equals(getPassword(), userDto.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getRole(), getPassword());
     }
 }

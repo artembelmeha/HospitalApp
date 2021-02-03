@@ -32,6 +32,8 @@ public class JDBCUserDao implements UserDao {
     private static final String UPDATE_DOCTORS_PATIENTS_NUMBER = "UPDATE users SET patients_number = ? WHERE id = ?";
     private static final String UPDATE_USER_TO_PATIENT = "UPDATE users SET role = ?, birth_date = ?, " +
             "on_treatment = ?, sex = ?, telephone_number = ?, doctor_id = ?, card_id = ? WHERE id = ?";
+    public static final String FROM_USERS_BY_ASSIGNMENT_ID = "SELECT * FROM users" +
+            " join assignment_nursehelper an on users.id = an.nurse_id where assignment_id = ?;";
 
     private Connection connection;
 
@@ -136,19 +138,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> getUserByDoctorId(long id) {
-        try (PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_DOCTOR_ID)) {
-            List<User> users = new ArrayList<>();
-            ps.setString(1, String.valueOf(id));
-            ResultSet rs = ps.executeQuery();
-            UserMapper userMapper = new UserMapper();
-            while (rs.next()) {
-                users.add(userMapper.extractFromResultSet(rs));
-            }
-            return users;
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException(e.getMessage());
-        }
+        return getUsers(id, FROM_USERS_WHERE_DOCTOR_ID);
     }
 
     @Override
@@ -201,6 +191,27 @@ public class JDBCUserDao implements UserDao {
             ps.setString( 1, String.valueOf(patientsNumber));
             ps.setLong( 2, id);
             ps.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<User> getNurserByAssignmentID(long id) {
+        return getUsers(id, FROM_USERS_BY_ASSIGNMENT_ID);
+    }
+
+    private List<User> getUsers(long id, String fromUsersByAssignmentId) {
+        try (PreparedStatement ps = connection.prepareCall(fromUsersByAssignmentId)) {
+            List<User> users = new ArrayList<>();
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            while (rs.next()) {
+                users.add(userMapper.extractFromResultSet(rs));
+            }
+            return users;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());

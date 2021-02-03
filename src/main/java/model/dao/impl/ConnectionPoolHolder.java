@@ -6,7 +6,9 @@ import javax.sql.DataSource;
 import java.sql.DriverManager;
 
 public class ConnectionPoolHolder {
+
     private static volatile DataSource dataSource;
+
     public static DataSource getDataSource(){
 
         if (dataSource == null){

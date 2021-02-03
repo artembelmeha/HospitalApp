@@ -1,0 +1,48 @@
+package commands.assignment;
+
+import commands.Command;
+import model.dto.UserDto;
+import model.entity.Assignment;
+import model.entity.Role;
+import service.AssignmentService;
+import service.ServiceFactory;
+import service.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static commands.Constants.*;
+
+public class AssignmentInfo implements Command {
+
+    private static AssignmentService assignmentService = ServiceFactory.getInstance().getAssignmentService();
+    private static UserService userService = ServiceFactory.getInstance().getUserService();
+
+    @Override
+    public String execute(HttpServletRequest request) {
+        long assignmentId = Long.parseLong(request.getParameterValues(ID)[0]);
+        HttpSession session = request.getSession();
+        UserDto currentUser = (UserDto) session.getAttribute(USER);
+        Assignment assignment = assignmentService.getAssignmentById(assignmentId);
+        List<UserDto> assignedNurses = userService.getNursesByAssignmentID(assignmentId);
+        List<UserDto> freeNurses = userService.getUsersByRole(Role.NURSE).stream()
+                .map(UserDto::new)
+                .collect(Collectors.toList());
+        freeNurses.removeAll(assignedNurses);
+
+        session.setAttribute(ASSIGNMENT, assignment);
+        session.setAttribute(NURSES, assignedNurses);
+        session.setAttribute(FREE_NURSES, freeNurses);
+        System.out.println(currentUser.getRole()+"-------------------------");
+        if(currentUser.getRole() == Role.ADMIN) {
+            return REDIRECT_ADMIN_ASSIGNMENT_INFO;
+        }
+        if(currentUser.getRole() == Role.DOCTOR) {
+            return REDIRECT_DOCTOR_ASSIGNMENT_INFO;
+        }
+        return null;
+    }
+}

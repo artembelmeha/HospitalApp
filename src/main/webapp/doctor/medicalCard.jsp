@@ -47,7 +47,7 @@
         </table>
 
         <br>
-        <form class="button" action="/api/admin/addAssignment.jsp" method="GET">
+        <form class="button" action="/api/doctor/addAssignment.jsp" method="GET">
             <input type="submit" value="<fmt:message key="assignment.createNew"/>"/>
         </form>
 
@@ -71,7 +71,7 @@
                         <fmt:message key="patient.${assignment.isComplete}"/>
                     </td>
                     <td>
-                        <a href="/api/admin/assignmentInfo?id=${assignment.id}" ><fmt:message key="assignment.open"/></a>
+                        <a href="/api/doctor/assignmentInfo?id=${assignment.id}" ><fmt:message key="assignment.open"/></a>
                     </td>
 
                 </tr>
