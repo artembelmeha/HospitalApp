@@ -2,7 +2,6 @@ package commands.user;
 
 import commands.Command;
 import model.dto.DoctorDto;
-import model.dto.PatientDto;
 import model.dto.UserDto;
 import model.entity.Qualification;
 import model.entity.Role;
@@ -29,6 +28,6 @@ public class AssignAsDoctor implements Command {
             userService.assignAsDoctor(doctorDto);
             return HREF_LIST_OF_DOCTORS;
         }
-        return PAGE_ERROR;
+        return PAGE_ACCESS_DENIED;
     }
 }

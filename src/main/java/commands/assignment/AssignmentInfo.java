@@ -32,11 +32,9 @@ public class AssignmentInfo implements Command {
                 .map(UserDto::new)
                 .collect(Collectors.toList());
         freeNurses.removeAll(assignedNurses);
-
         session.setAttribute(ASSIGNMENT, assignment);
         session.setAttribute(NURSES, assignedNurses);
         session.setAttribute(FREE_NURSES, freeNurses);
-        System.out.println(currentUser.getRole()+"-------------------------");
         if(currentUser.getRole() == Role.ADMIN) {
             return REDIRECT_ADMIN_ASSIGNMENT_INFO;
         }

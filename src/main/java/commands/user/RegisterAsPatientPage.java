@@ -34,6 +34,6 @@ public class RegisterAsPatientPage implements Command {
             session.setAttribute(PATIENT, patient);
             return REDIRECT_ADMIN_REGISTER_PATIENT;
         }
-        return PAGE_ERROR;
+        return PAGE_ACCESS_DENIED;
     }
 }

@@ -24,6 +24,6 @@ public class AssignAsNurse implements Command {
             userService.assignAsNurse(userId);
             return HREF_LIST_OF_NURSES;
         }
-        return PAGE_ERROR;
+        return PAGE_ACCESS_DENIED;
     }
 }

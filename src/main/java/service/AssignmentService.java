@@ -32,4 +32,20 @@ public class AssignmentService {
             throw new UnknownSqlException();
         }
     }
+
+    public void addOneExecutionById(long id) {
+        try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
+            Assignment assignment = assignmentDao.findById(id);
+            assignment.setDoneTimes(assignment.getDoneTimes() + 1);
+            if (assignment.getDoneTimes() == assignment.getQuantity()) {
+                assignment.setIsComplete(true);
+                LOGGER.info("Assignment with id #[ " +assignment.getId() + " ] was completed!");
+            }
+            assignmentDao.update(assignment);
+        } catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
+        }
+    }
 }

@@ -26,6 +26,6 @@ public class RegisterAsDoctorPage implements Command {
             session.setAttribute(DOCTOR, doctor);
             return REDIRECT_ADMIN_REGISTER_DOCTOR;
         }
-        return PAGE_ERROR;
+        return PAGE_ACCESS_DENIED;
     }
 }

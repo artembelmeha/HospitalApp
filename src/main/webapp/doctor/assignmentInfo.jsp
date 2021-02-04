@@ -26,7 +26,7 @@
 <div class="m-5 p-1">
     <h2><fmt:message key="assignment.info"/></h2>
     <br>
-    <form method="GET" action="/api/doctor/addOneExecution?id=${assignmentDto.id}">
+    <form method="GET" action="/api/doctor/addOneExecution">
         <table>
             <tr>
                 <td>
@@ -144,7 +144,7 @@
                         <c:out value="${nurse.firstName}"/> <c:out value="${nurse.lastName}"/>
                     </td>
                     <td>
-                        <a href="/api/doctor/${assignment.id}/${nurse.id}" >
+                        <a href="/api/doctor/addNurseToAssignment?id=${nurse.id}" >
                             <fmt:message key="assignment.assign"/>
                         </a>
                     </td>
