@@ -4,14 +4,11 @@ import commands.Command;
 import model.dto.UserDto;
 import model.entity.Assignment;
 import model.entity.AssignmentType;
-import model.entity.Role;
 import service.AssignmentService;
 import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static commands.Constants.*;
 
@@ -28,7 +25,7 @@ public class AddOneExecution implements Command {
             assignmentService.addOneExecutionById(assignment.getId());
             return REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID  + assignment.getId();
         }
-        if(currentUser.isDoctor() && assignment.getType() != AssignmentType.SURGERY) {
+        if(currentUser.isNurse() && assignment.getType() != AssignmentType.SURGERY) {
             assignmentService.addOneExecutionById(assignment.getId());
             return REDIRECT_NURSE_ASSIGNMENT_INFO_ID  + assignment.getId();
         }

@@ -28,13 +28,9 @@ public class AssignmentInfo implements Command {
         UserDto currentUser = (UserDto) session.getAttribute(USER);
         Assignment assignment = assignmentService.getAssignmentById(assignmentId);
         List<UserDto> assignedNurses = userService.getNursesByAssignmentID(assignmentId);
-        List<UserDto> freeNurses = userService.getUsersByRole(Role.NURSE).stream()
-                .map(UserDto::new)
-                .collect(Collectors.toList());
-        freeNurses.removeAll(assignedNurses);
         session.setAttribute(ASSIGNMENT, assignment);
         session.setAttribute(NURSES, assignedNurses);
-        session.setAttribute(FREE_NURSES, freeNurses);
+        session.setAttribute(FREE_NURSES, getFreeNurses(assignedNurses));
         if(currentUser.isAdmin()) {
             return REDIRECT_ADMIN_ASSIGNMENT_INFO;
         }
@@ -42,5 +38,14 @@ public class AssignmentInfo implements Command {
             return REDIRECT_DOCTOR_ASSIGNMENT_INFO;
         }
         return null;
+    }
+
+    private List<UserDto> getFreeNurses(List<UserDto> assignedNurses) {
+        List<UserDto> freeNurses = userService.getUsersByRole(Role.NURSE).stream()
+                .map(UserDto::new)
+                .collect(Collectors.toList());
+
+        freeNurses.removeAll(assignedNurses);
+        return freeNurses;
     }
 }

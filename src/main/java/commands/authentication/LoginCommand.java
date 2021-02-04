@@ -24,18 +24,24 @@ public class LoginCommand implements Command {
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         HttpSession session = request.getSession();
-        if( email == null || email.equals(EMPTY_STRING) || password == null || password.equals(EMPTY_STRING)  ){
+        if (email == null || email.equals(EMPTY_STRING) || password == null || password.equals(EMPTY_STRING)) {
             return PAGE_LOGIN;
         }
         try {
             userService.signIn(email, password);
             UserDto currentUser = new UserDto(userService.getUserByEmail(email));
             session.setAttribute(USER, currentUser);
-            if (currentUser.getRole().equals(ADMIN)){
+            if (currentUser.isAdmin()) {
                 return REDIRECT_ADMIN_SUCCESS;
             }
-            return REDIRECT_DOCTOR_SUCCESS;
-        } catch (UnknownSqlException  e) {
+            if (currentUser.isDoctor()) {
+                return REDIRECT_DOCTOR_SUCCESS;
+            }
+            if (currentUser.isNurse()) {
+                return REDIRECT_NURSE_SUCCESS;
+            }
+            return PAGE_ACCESS_DENIED;
+        } catch (UnknownSqlException e) {
             LOGGER.error("Error caught while executing the method:", e);
             session.setAttribute("login_fails", e.getMessage());
             return PAGE_LOGIN;
