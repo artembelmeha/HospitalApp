@@ -21,7 +21,7 @@ public class AddNurseToAssignment implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        long nurseId = Long.parseLong(request.getParameterValues(ID)[0]);
+        long nurseId = Long.parseLong(request.getParameterValues(PARAMETER_ID)[0]);
         Assignment assignment = (Assignment) session.getAttribute(ASSIGNMENT);
         UserDto currentUser = (UserDto) session.getAttribute(USER);
         if(currentUser.isDoctor()) {

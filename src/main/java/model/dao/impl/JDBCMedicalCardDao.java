@@ -4,7 +4,6 @@ import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.MedicalCardDao;
 import model.dao.mapper.MedicalCardMapper;
-import model.dao.mapper.UserMapper;
 import model.entity.MedicalCard;
 import org.apache.log4j.Logger;
 
@@ -12,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCMedicalCardDao implements MedicalCardDao {
@@ -80,7 +80,7 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
 
     @Override
     public List<MedicalCard> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
 
     @Override
     public void delete(int id) {
-
+        // for future
     }
 
     @Override
@@ -105,7 +105,7 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UnknownSqlException(e.getMessage());
         }
     }
 }

@@ -147,4 +147,18 @@ public class UserService {
             throw new UnknownSqlException();
         }
     }
+
+    public void dischargePatientByMedicalCardId(long medicalCardId) {
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+             User user = userDao.getUserByMedicalCardId(medicalCardId);
+             userDao.dischargePatient(user);
+
+             User doctor = userDao.findById(user.getDoctorId());
+             userDao.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() - 1);
+        } catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
+        }
+    }
 }

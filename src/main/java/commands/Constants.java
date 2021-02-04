@@ -74,6 +74,8 @@ public interface Constants {
 
     public static final String REDIRECT_NURSE_SUCCESS = PREFIX_REDIRECT+"/nurse/success.jsp";
     public static final String REDIRECT_NURSE_ASSIGNMENT_INFO_ID = PREFIX_REDIRECT+"redirect:/nurse/assignmentInfo?id=";
+    public static final String REDIRECT_NURSE_MEDICAL_CARD = PREFIX_REDIRECT+"/nurse/medicalCard.jsp";
+    public static final String REDIRECT_NURSE_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/nurse/assignmentInfo.jsp";
 
     public static final String REDIRECT_INDEX = PREFIX_REDIRECT+"/index.jsp";
     public static final String REDIRECT_LOGOUT= PREFIX_REDIRECT+"/logout.jsp";
@@ -81,9 +83,11 @@ public interface Constants {
 
 
     public static final String PARAMETER_TYPE = "type";
+    public static final String PARAMETER_ID = "id";
     public static final String PARAMETER_DATE = "date";
     public static final String PARAMETER_NAME = "name";
     public static final String PARAMETER_NOTES = "notes";
     public static final String PARAMETER_QUANTITY = "quantity";
     public static final String PARAMETER_CURRENT_DIAGNOSIS = "currentDiagnosis";
+    public static final String PARAMETER_FINAL_DIAGNOSIS = "finalDiagnosis";
 }

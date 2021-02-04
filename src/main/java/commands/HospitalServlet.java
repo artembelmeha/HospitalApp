@@ -8,6 +8,7 @@ import commands.authentication.ErrorCommand;
 import commands.authentication.LoginCommand;
 import commands.authentication.LogoutCommand;
 import commands.authentication.RegistrationCommand;
+import commands.medicalCard.DischargePatient;
 import commands.medicalCard.ShowMedicalCard;
 import commands.user.*;
 import org.apache.log4j.Logger;
@@ -59,6 +60,7 @@ public class HospitalServlet extends HttpServlet {
         commands.put("doctor/addOneExecution", new AddOneExecution());
         commands.put("doctor/addNurseToAssignment", new AddNurseToAssignment());
         commands.put("doctor/addAssignment", new AddAssignment());
+        commands.put("doctor/dischargePatient", new DischargePatient());
         commands.put("nurse/addOneExecution", new AddOneExecution());
 
     }

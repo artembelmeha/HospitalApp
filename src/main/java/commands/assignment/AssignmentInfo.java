@@ -37,7 +37,10 @@ public class AssignmentInfo implements Command {
         if(currentUser.isDoctor()) {
             return REDIRECT_DOCTOR_ASSIGNMENT_INFO;
         }
-        return null;
+        if(currentUser.isNurse()) {
+            return REDIRECT_NURSE_ASSIGNMENT_INFO;
+        }
+        return PAGE_ACCESS_DENIED;
     }
 
     private List<UserDto> getFreeNurses(List<UserDto> assignedNurses) {

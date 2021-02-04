@@ -1,20 +1,15 @@
 package commands.medicalCard;
 
 import commands.Command;
-import model.dto.PatientDto;
 import model.dto.UserDto;
 import model.entity.Assignment;
 import model.entity.MedicalCard;
-import model.entity.Role;
-import model.entity.User;
 import service.AssignmentService;
 import service.MedicalCardService;
 import service.ServiceFactory;
-import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 
 import static commands.Constants.*;
@@ -34,12 +29,15 @@ public class ShowMedicalCard implements Command {
         List<Assignment> assignmentList = assignmentService.getAssignmentByMedicalCardId(medicalCardId);
         session.setAttribute(MEDICAL_CARD, medicalCard);
         session.setAttribute(ASSIGNMENTS, assignmentList);
-        if(currentUser.getRole() == Role.ADMIN) {
+        if(currentUser.isAdmin()) {
             return REDIRECT_ADMIN_MEDICAL_CARD;
         }
-        if(currentUser.getRole() == Role.DOCTOR) {
+        if(currentUser.isDoctor()) {
             return REDIRECT_DOCTOR_MEDICAL_CARD;
         }
-        return null;
+        if(currentUser.isNurse()) {
+            return REDIRECT_NURSE_MEDICAL_CARD;
+        }
+        return PAGE_ACCESS_DENIED;
     }
 }

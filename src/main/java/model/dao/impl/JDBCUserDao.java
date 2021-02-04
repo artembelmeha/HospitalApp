@@ -6,6 +6,7 @@ import model.dao.UserDao;
 import model.dao.mapper.UserMapper;
 import model.dto.DoctorDto;
 import model.dto.PatientDto;
+import model.entity.Qualification;
 import model.entity.Role;
 import model.entity.User;
 import org.apache.log4j.Logger;
@@ -22,10 +23,14 @@ public class JDBCUserDao implements UserDao {
             "INSERT INTO users (email, first_name, on_treatment, last_name, " +
                     "password, role, telephone_number, patients_number) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER_DISCHARGE =
+            "UPDATE users SET  on_treatment = ?, role = ?, doctor_id = ? WHERE id = ?";
+
     public static final String USERS_WHERE_ROLE = "SELECT * FROM users WHERE role = ?";
-    public static final String FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
-    public static final String FROM_USERS_WHERE_DOCTOR_ID = "SELECT * FROM users WHERE doctor_id = ?";
-    public static final String FROM_USERS_WHERE_ID = "SELECT * FROM users WHERE id = ?";
+    public static final String USERS_WHERE_CARD_ID = "SELECT * FROM users WHERE card_id = ?";
+    public static final String USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
+    public static final String USERS_WHERE_DOCTOR_ID = "SELECT * FROM users WHERE doctor_id = ?";
+    public static final String USERS_WHERE_ID = "SELECT * FROM users WHERE id = ?";
     private static final String UPDATE_USER_ROLE = "UPDATE users SET role = ? WHERE id = ?";
     private static final String UPDATE_USER_TO_DOCTOR = "UPDATE users SET role = ?, qualification = ?, " +
             "patients_number = ? WHERE id = ?";
@@ -66,7 +71,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findById(long id) {
-        try (PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_ID)) {
+        try (PreparedStatement ps = connection.prepareCall(USERS_WHERE_ID)) {
             ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
@@ -87,7 +92,6 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void update(User user) {
-
     }
 
     @Override
@@ -106,7 +110,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findUserByEmail(String email) {
-        try (PreparedStatement ps = connection.prepareCall(FROM_USERS_WHERE_EMAIL)) {
+        try (PreparedStatement ps = connection.prepareCall(USERS_WHERE_EMAIL)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
@@ -139,7 +143,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> getUserByDoctorId(long id) {
-        return getUsers(id, FROM_USERS_WHERE_DOCTOR_ID);
+        return getUsers(id, USERS_WHERE_DOCTOR_ID);
     }
 
     @Override
@@ -189,7 +193,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void updateDoctorPatientsNumber(Long id, int patientsNumber) {
         try (PreparedStatement ps = connection.prepareCall(UPDATE_DOCTORS_PATIENTS_NUMBER)) {
-            ps.setString( 1, String.valueOf(patientsNumber));
+            ps.setInt( 1, patientsNumber);
             ps.setLong( 2, id);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -203,6 +207,22 @@ public class JDBCUserDao implements UserDao {
         return getUsers(id, FROM_USERS_BY_ASSIGNMENT_ID);
     }
 
+    @Override
+    public User getUserByMedicalCardId(long medicalCardId) {
+        try (PreparedStatement ps = connection.prepareCall(USERS_WHERE_CARD_ID)) {
+            ps.setLong(1, medicalCardId);
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            if (rs.next()) {
+                return userMapper.extractFromResultSet(rs);
+            }
+            throw new EntityNotFoundException("error.wrongCredential");
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
     private List<User> getUsers(long id, String fromUsersByAssignmentId) {
         try (PreparedStatement ps = connection.prepareCall(fromUsersByAssignmentId)) {
             List<User> users = new ArrayList<>();
@@ -213,6 +233,20 @@ public class JDBCUserDao implements UserDao {
                 users.add(userMapper.extractFromResultSet(rs));
             }
             return users;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void dischargePatient(User user){
+        try(PreparedStatement ps = connection.prepareCall(UPDATE_USER_DISCHARGE)) {
+            ps.setBoolean( 1, false);
+            ps.setString( 2, Role.UNDEFINE.name());
+            ps.setString(3, null);
+            ps.setLong(4, user.getId());
+            ps.executeUpdate();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());

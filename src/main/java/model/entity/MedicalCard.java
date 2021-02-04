@@ -1,6 +1,5 @@
 package model.entity;
 
-import java.util.List;
 
 public class MedicalCard {
 

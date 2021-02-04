@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="@{|/medicalCard/finish/${id}|}" method="post">
+                    <form action="/api/doctor/dischargePatient" method="post">
                         <input type="submit" value="<fmt:message key="medicalCard.finishTreatment"/>"/>
                         <input type="text" name="finalDiagnosis"/>
                     </form>
