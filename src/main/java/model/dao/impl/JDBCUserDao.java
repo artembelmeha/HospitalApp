@@ -33,7 +33,8 @@ public class JDBCUserDao implements UserDao {
     private static final String UPDATE_USER_TO_PATIENT = "UPDATE users SET role = ?, birth_date = ?, " +
             "on_treatment = ?, sex = ?, telephone_number = ?, doctor_id = ?, card_id = ? WHERE id = ?";
     public static final String FROM_USERS_BY_ASSIGNMENT_ID = "SELECT * FROM users" +
-            " join assignment_nursehelper an on users.id = an.nurse_id where assignment_id = ?;";
+            " join assignment_nursehelper an on users.id = an.nurse_id where assignment_id = ?";
+
 
     private Connection connection;
 

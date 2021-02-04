@@ -105,4 +105,14 @@ public class UserDto {
     public int hashCode() {
         return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getRole(), getPassword());
     }
+    public boolean isAdmin(){
+        return this.role == Role.ADMIN;
+    }
+    public boolean isDoctor(){
+        return this.role == Role.DOCTOR;
+    }
+    public boolean isNurse(){
+        return this.role == Role.NURSE;
+    }
+
 }

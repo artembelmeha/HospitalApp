@@ -35,10 +35,10 @@ public class AssignmentInfo implements Command {
         session.setAttribute(ASSIGNMENT, assignment);
         session.setAttribute(NURSES, assignedNurses);
         session.setAttribute(FREE_NURSES, freeNurses);
-        if(currentUser.getRole() == Role.ADMIN) {
+        if(currentUser.isAdmin()) {
             return REDIRECT_ADMIN_ASSIGNMENT_INFO;
         }
-        if(currentUser.getRole() == Role.DOCTOR) {
+        if(currentUser.isDoctor()) {
             return REDIRECT_DOCTOR_ASSIGNMENT_INFO;
         }
         return null;

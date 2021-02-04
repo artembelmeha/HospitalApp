@@ -68,10 +68,21 @@ public interface Constants {
     public static final String REDIRECT_DOCTOR_MEDICAL_CARD = PREFIX_REDIRECT+"/doctor/medicalCard.jsp";
     public static final String REDIRECT_DOCTOR_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/doctor/assignmentInfo.jsp";
     public static final String REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID = PREFIX_REDIRECT+"redirect:/doctor/assignmentInfo?id=";
+    public static final String REDIRECT_DOCTOR_MEDICAL_CARD_ID = PREFIX_REDIRECT+"redirect:/doctor/medicalCard?id=";
 
 
 
     public static final String REDIRECT_NURSE_ASSIGNMENT_INFO_ID = PREFIX_REDIRECT+"redirect:/nurse/assignmentInfo?id=";
 
     public static final String REDIRECT_INDEX = PREFIX_REDIRECT+"/index.jsp";
+    public static final String REDIRECT_LOGOUT= PREFIX_REDIRECT+"/logout.jsp";
+
+
+
+    public static final String PARAMETER_TYPE = "type";
+    public static final String PARAMETER_DATE = "date";
+    public static final String PARAMETER_NAME = "name";
+    public static final String PARAMETER_NOTES = "notes";
+    public static final String PARAMETER_QUANTITY = "quantity";
+    public static final String PARAMETER_CURRENT_DIAGNOSIS = "currentDiagnosis";
 }

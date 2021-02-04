@@ -61,6 +61,13 @@ public class UserService {
     }
 
     public User create(UserDto userDto) {
+        User user = getUser(userDto);
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.create(user);
+        }
+    }
+
+    private User getUser(UserDto userDto) {
         User user = new User();
         user.setPassword(userDto.getPassword());
         user.setRole(UNDEFINE);
@@ -69,9 +76,7 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setOnTreatment(false);
         user.setPatientsNumber(0);
-        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
-            return userDao.create(user);
-        }
+        return user;
     }
 
     public List<User> getUsersByDoctorId(long id) {

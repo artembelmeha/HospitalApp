@@ -1,5 +1,6 @@
 package commands;
 
+import commands.assignment.AddAssignment;
 import commands.assignment.AddOneExecution;
 import commands.assignment.AssignmentInfo;
 import commands.assignmnet_nurshelper.AddNurseToAssignment;
@@ -57,6 +58,7 @@ public class HospitalServlet extends HttpServlet {
         commands.put("nurse/assignmentInfo", new AssignmentInfo());
         commands.put("doctor/addOneExecution", new AddOneExecution());
         commands.put("doctor/addNurseToAssignment", new AddNurseToAssignment());
+        commands.put("doctor/addAssignment", new AddAssignment());
         commands.put("nurse/addOneExecution", new AddOneExecution());
 
     }

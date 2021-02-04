@@ -4,9 +4,7 @@ import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
 import model.dao.mapper.AssignmentMapper;
-import model.dao.mapper.MedicalCardMapper;
 import model.entity.Assignment;
-import model.entity.User;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -23,7 +21,8 @@ public class JDBCAssignmentDao implements AssignmentDao {
     public static final String FROM_ASSIGNMENT_WHERE_ID = "SELECT * FROM assignment WHERE id = ?";
     private static final String UPDATE_TEMPLATE = "UPDATE assignment SET current_diagnosis = ?, date = ?, done_times = ?, " +
             "is_complete = ?, name = ?, notes = ?, quantity = ?, type = ? WHERE  id = ?";
-
+    private static final String INSERT_TEMPLATE = "INSERT INTO assignment (current_diagnosis, date, done_times, " +
+            "is_complete, name, notes, quantity, type, card_id) VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public JDBCAssignmentDao(Connection connection) {
         this.connection = connection;
@@ -48,8 +47,22 @@ public class JDBCAssignmentDao implements AssignmentDao {
 
     @Override
     public Assignment create(Assignment assignment) {
-
-        return null;
+        try (PreparedStatement ps = connection.prepareCall(INSERT_TEMPLATE)) {
+            ps.setString(1, assignment.getCurrentDiagnosis());
+            ps.setDate(2, Date.valueOf(assignment.getDate()));
+            ps.setInt(3, assignment.getDoneTimes());
+            ps.setBoolean(4, assignment.getIsComplete());
+            ps.setString(5, assignment.getName());
+            ps.setString(6, assignment.getNotes());
+            ps.setInt(7, assignment.getQuantity());
+            ps.setString(8, assignment.getType().name());
+            ps.setLong(9, assignment.getCardId());
+            ps.execute();
+            return assignment;  //todo
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
     }
 
     @Override

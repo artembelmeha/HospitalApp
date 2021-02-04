@@ -4,7 +4,9 @@ import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
 import model.dao.DaoFactory;
+import model.dao.UserDao;
 import model.entity.Assignment;
+import model.entity.User;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -46,6 +48,15 @@ public class AssignmentService {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException();
+        }
+    }
+
+    public void addAssignmentToMedicalCard(Assignment assignment) {
+        try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
+            assignmentDao.create(assignment);
+        }catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 }

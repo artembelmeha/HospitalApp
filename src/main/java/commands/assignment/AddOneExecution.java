@@ -24,11 +24,11 @@ public class AddOneExecution implements Command {
         HttpSession session = request.getSession();
         Assignment assignment = (Assignment) session.getAttribute(ASSIGNMENT);
         UserDto currentUser = (UserDto) session.getAttribute(USER);
-        if(currentUser.getRole() == Role.DOCTOR) {
+        if(currentUser.isDoctor()) {
             assignmentService.addOneExecutionById(assignment.getId());
             return REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID  + assignment.getId();
         }
-        if(currentUser.getRole() == Role.DOCTOR && assignment.getType() != AssignmentType.SURGERY) {
+        if(currentUser.isDoctor() && assignment.getType() != AssignmentType.SURGERY) {
             assignmentService.addOneExecutionById(assignment.getId());
             return REDIRECT_NURSE_ASSIGNMENT_INFO_ID  + assignment.getId();
         }
