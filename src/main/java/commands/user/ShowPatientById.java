@@ -1,6 +1,5 @@
 package commands.user;
 
-import com.mysql.cj.xdevapi.Session;
 import commands.Command;
 import model.dto.PatientDto;
 import model.dto.UserDto;

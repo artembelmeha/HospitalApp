@@ -4,13 +4,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtil {
+
+    public static final String ALGORITHM = "MD5";
+
     private EncryptUtil() {
 
     }
     public static String encryptString(String toEncryptString) {
         String generatedPassword = null;
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            MessageDigest md = MessageDigest.getInstance(ALGORITHM);
             md.update(toEncryptString.getBytes());
             byte[] bytes = md.digest();
             StringBuilder sb = new StringBuilder();

@@ -9,6 +9,6 @@ public class ErrorCommand implements Command {
     public String execute(HttpServletRequest request) {
 
 //        return "/error.jsp";
-        return null;
+        return null;  //todo
     }
 }

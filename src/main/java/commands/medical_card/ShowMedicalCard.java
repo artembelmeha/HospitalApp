@@ -1,4 +1,4 @@
-package commands.medicalCard;
+package commands.medical_card;
 
 import commands.Command;
 import model.dto.UserDto;

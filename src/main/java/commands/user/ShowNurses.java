@@ -10,14 +10,14 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static commands.Constants.*;
-import static commands.Constants.USER;
+import static commands.Constants.NURSES;
+import static commands.Constants.REDIRECT_ADMIN_NURSES;
 import static model.entity.Role.NURSE;
 
 public class ShowNurses implements Command {
 
 
-    public static UserService userService = ServiceFactory.getInstance().getUserService();
+    public static final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public String execute(HttpServletRequest request) {

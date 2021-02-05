@@ -1,4 +1,4 @@
-package commands.medicalCard;
+package commands.medical_card;
 
 import commands.Command;
 import model.dto.UserDto;
@@ -24,7 +24,6 @@ public class DischargePatient implements Command {
         String diagnosis = request.getParameter(PARAMETER_FINAL_DIAGNOSIS);
         MedicalCard medicalCard = (MedicalCard) session.getAttribute(MEDICAL_CARD);
         medicalCard.setFinalDiagnosis(diagnosis);
-        System.out.println(diagnosis);
         if (currentUser.isDoctor()) {
             medicalCardService.setFinalDiagnosisById(medicalCard);
             userService.dischargePatientByMedicalCardId(medicalCard.getId());

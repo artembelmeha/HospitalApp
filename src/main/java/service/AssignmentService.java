@@ -4,9 +4,7 @@ import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
 import model.dao.DaoFactory;
-import model.dao.UserDao;
 import model.entity.Assignment;
-import model.entity.User;
 import org.apache.log4j.Logger;
 
 import java.util.List;

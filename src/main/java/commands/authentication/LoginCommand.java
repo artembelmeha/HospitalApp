@@ -3,15 +3,14 @@ package commands.authentication;
 import commands.Command;
 import exception.UnknownSqlException;
 import model.dto.UserDto;
+import org.apache.log4j.Logger;
 import service.ServiceFactory;
 import service.UserService;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static commands.Constants.*;
-import static model.entity.Role.ADMIN;
 
 public class LoginCommand implements Command {
 

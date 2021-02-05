@@ -83,6 +83,7 @@ public interface Constants {
 
 
     public static final String PARAMETER_TYPE = "type";
+    public static final String PARAMETER_SEX= "sex";
     public static final String PARAMETER_ID = "id";
     public static final String PARAMETER_DATE = "date";
     public static final String PARAMETER_NAME = "name";

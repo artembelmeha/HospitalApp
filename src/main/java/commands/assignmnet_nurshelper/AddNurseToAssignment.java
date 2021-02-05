@@ -3,10 +3,7 @@ package commands.assignmnet_nurshelper;
 import commands.Command;
 import model.dto.UserDto;
 import model.entity.Assignment;
-import model.entity.AssignmentType;
-import model.entity.Role;
 import service.AssignmentNurshelperService;
-import service.AssignmentService;
 import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;

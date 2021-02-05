@@ -15,7 +15,7 @@ import static model.entity.Role.UNDEFINE;
 
 public class ShowUndefineUsers implements Command {
 
-    public static UserService userService = ServiceFactory.getInstance().getUserService();
+    public static final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public String execute(HttpServletRequest request) {

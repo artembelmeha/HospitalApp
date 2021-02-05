@@ -8,8 +8,8 @@ import commands.authentication.ErrorCommand;
 import commands.authentication.LoginCommand;
 import commands.authentication.LogoutCommand;
 import commands.authentication.RegistrationCommand;
-import commands.medicalCard.DischargePatient;
-import commands.medicalCard.ShowMedicalCard;
+import commands.medical_card.DischargePatient;
+import commands.medical_card.ShowMedicalCard;
 import commands.user.*;
 import org.apache.log4j.Logger;
 
@@ -28,8 +28,9 @@ public class HospitalServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(HospitalServlet.class);
 
-    private Map<String, Command> commands = new HashMap<>();
+    private static Map<String, Command> commands = new HashMap<>();
 
+    @Override
     public void init(ServletConfig servletConfig){
 
         servletConfig.getServletContext()

@@ -3,7 +3,6 @@ package commands.user;
 import commands.Command;
 import model.dto.PatientDto;
 import model.dto.UserDto;
-import model.entity.Role;
 import model.entity.Sex;
 import service.ServiceFactory;
 import service.UserService;
@@ -24,16 +23,19 @@ public class AssignAsPatient implements Command {
         HttpSession session = request.getSession();
         UserDto currentUser = (UserDto) session.getAttribute(USER);
 
-
-        if (currentUser.getRole() == Role.ADMIN) {
-            PatientDto patientDto = (PatientDto) session.getAttribute(PATIENT);
-            patientDto.setBirthDate(LocalDate.parse(request.getParameter(BIRTH_DATE)));
-            patientDto.setTelephoneNumber(request.getParameter(TELEPHONE_NUMBER));
-            patientDto.setSex(Sex.valueOf(request.getParameter(SEX)));
-            patientDto.setDoctorId(Long.parseLong(request.getParameter(DOCTOR)));
-            userService.assignAsPatient(patientDto);
+        if (currentUser.isAdmin()) {
+            userService.assignAsPatient(getPatientDtoFromSession(request));
             return HREF_LIST_OF_PATIENTS;
         }
         return PAGE_ACCESS_DENIED;
+    }
+
+    private PatientDto getPatientDtoFromSession(HttpServletRequest request) {
+        PatientDto patientDto = (PatientDto) request.getSession().getAttribute(PATIENT);
+        patientDto.setBirthDate(LocalDate.parse(request.getParameter(BIRTH_DATE)));
+        patientDto.setTelephoneNumber(request.getParameter(TELEPHONE_NUMBER));
+        patientDto.setSex(Sex.valueOf(request.getParameter(PARAMETER_SEX)));
+        patientDto.setDoctorId(Long.parseLong(request.getParameter(DOCTOR)));
+        return patientDto;
     }
 }
