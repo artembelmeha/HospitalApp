@@ -18,11 +18,14 @@
     <title>Title</title>
 
 </head>
-<body>
-    <jsp:include page="../header.jsp"/>
-    Success
+<body style ="background: #eee;">
+<jsp:include page="../header.jsp"/>
+<div class="m-5 p-1">
+    <h2 style="position: center"><fmt:message key="message.welcome"/></h2>
     <br>
+    <p><fmt:message key="message.myinfo"/>:</p>
     <label><fmt:message key="login.lastName"/></label>: <label>${user.lastName}</label><br>
     <label><fmt:message key="login.firstName"/></label>: <label>${user.firstName}</label><br>
+</div>
 </body>
 </html>

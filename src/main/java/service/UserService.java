@@ -1,5 +1,6 @@
 package service;
 
+import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.DaoFactory;
 import model.dao.UserDao;
@@ -71,6 +72,11 @@ public class UserService {
             return userDao.getUserByDoctorId(id);
         }
     }
+    public List<User> getUsersByAssignedNurse(long id) {
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.getUsersByNurseId(id);
+        }
+    }
 
     public User getUserById(long id) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
@@ -121,6 +127,10 @@ public class UserService {
 
              User doctor = userDao.findById(user.getDoctorId());
              userDao.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() - 1);
+        } catch (EntityNotFoundException | UnknownSqlException e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException();
         }
     }
 }

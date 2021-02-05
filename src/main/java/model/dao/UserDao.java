@@ -30,4 +30,6 @@ public interface UserDao extends GenericDao<User>{
     User getUserByMedicalCardId(long medicalCardId);
 
      void dischargePatient(User user);
+
+    List<User> getUsersByNurseId(long id);
 }

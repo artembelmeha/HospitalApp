@@ -3,6 +3,7 @@ package service;
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
+import model.dao.AssignmentNursehelperDao;
 import model.dao.DaoFactory;
 import model.entity.Assignment;
 import org.apache.log4j.Logger;
@@ -39,6 +40,9 @@ public class AssignmentService {
             assignment.setDoneTimes(assignment.getDoneTimes() + 1);
             if (assignment.getDoneTimes() == assignment.getQuantity()) {
                 assignment.setIsComplete(true);
+                try(AssignmentNursehelperDao assignmentNursehelperDao = DaoFactory.getInstance().createAssignmentNursehelperDao()) {
+                    assignmentNursehelperDao.delete(id);
+                }
                 LOGGER.info("Assignment with id #[ " +assignment.getId() + " ] was completed!");
             }
             assignmentDao.update(assignment);

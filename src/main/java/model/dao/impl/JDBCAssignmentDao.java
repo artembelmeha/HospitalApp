@@ -110,7 +110,7 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 

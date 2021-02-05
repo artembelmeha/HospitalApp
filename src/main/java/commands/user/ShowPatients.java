@@ -32,7 +32,7 @@ public class ShowPatients implements Command {
         List<PatientDto> patients;
         extractedAttributes(request);
 
-        if(currentUser.isAdmin()) {
+        if (currentUser.isAdmin()) {
             patients = userService.getUsersByRole(Role.PATIENT).stream()
                     .map(PatientDto::new)
                     .collect(Collectors.toList());
@@ -41,12 +41,20 @@ public class ShowPatients implements Command {
             return REDIRECT_ADMIN_PATIENTS;
         }
         if (currentUser.isDoctor()) {
-                patients = userService.getUsersByDoctorId(currentUser.getId()).stream()
-                        .map(PatientDto::new)
-                        .collect(Collectors.toList());
-                sortByAttribute(patients);
-                setAttributeToSession(session, patients);
-                return REDIRECT_DOCTOR_PATIENTS;
+            patients = userService.getUsersByDoctorId(currentUser.getId()).stream()
+                    .map(PatientDto::new)
+                    .collect(Collectors.toList());
+            sortByAttribute(patients);
+            setAttributeToSession(session, patients);
+            return REDIRECT_DOCTOR_PATIENTS;
+        }
+        if (currentUser.isNurse()) {
+            patients = userService.getUsersByAssignedNurse(currentUser.getId()).stream()
+                    .map(PatientDto::new)
+                    .collect(Collectors.toList());
+            sortByAttribute(patients);
+            setAttributeToSession(session, patients);
+            return REDIRECT_NURSE_PATIENTS;
         }
         return "/error.jsp";
     }
@@ -57,6 +65,7 @@ public class ShowPatients implements Command {
         if (request.getParameter(ATTRIBUTE_SORT_BY) != null)
             sortBy = request.getParameter(ATTRIBUTE_SORT_BY);
     }
+
     private void sortByAttribute(List<PatientDto> patients) {
         switch (sortBy) {
             case BIRTH_DATE:
@@ -69,17 +78,19 @@ public class ShowPatients implements Command {
                 patients.sort(Comparator.comparing(PatientDto::getFirstName));
         }
     }
+
     private void setAttributeToSession(HttpSession session, List<PatientDto> patients) {
         session.setAttribute(ATTRIBUTE_NO_OF_PAGES, getNumberOfPages(patients.size(), RECORDS_PER_PAGE));
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
         session.setAttribute(ATTRIBUTE_SORT_BY, sortBy);
-        session.setAttribute(PATIENTS,  getPage(patients));
+        session.setAttribute(PATIENTS, getPage(patients));
     }
 
     private int getNumberOfPages(int size, int recordsPerPage) {
         int result = size / recordsPerPage;
         return size % recordsPerPage > 0 ? result + 1 : result;
     }
+
     private List<PatientDto> getPage(List<PatientDto> patients) {
         return patients.stream()
                 .skip(page * RECORDS_PER_PAGE - RECORDS_PER_PAGE)

@@ -1,3 +1,7 @@
+<SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -6,7 +10,6 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
-
 
 <html lang="${sessionScope.lang}" onclick="clearError()">
 <head>
@@ -28,7 +31,7 @@
     <h1><fmt:message key="login.loginForm" /></h1>
 <form class="form-group" method="POST" action="/api/login">
     <br>
-    <c:set var = "status" scope = "page" value = "${login_fails.equals('error.wrongCredential') ? 'is-invalid' : ''}"/>
+    <c:set var = "status" scope = "page" value = "${error.length()>5 ? 'is-invalid' : ''}"/>
     <input type="hidden" name="command" value="login" />
 
     <c:if test="${status eq 'is-invalid'}" >

@@ -3,6 +3,7 @@ package model.dao.impl;
 import exception.UnknownSqlException;
 import model.dao.AssignmentNursehelperDao;
 import model.dao.JDBCDao;
+import model.entity.MedicalCard;
 import model.entity.User;
 import org.apache.log4j.Logger;
 
@@ -21,6 +22,7 @@ public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentN
 
     public static final String INSERT_INTO_ASSIGNMENT_NURSEHELPER = "INSERT INTO assignment_nursehelper " +
             "(nurse_id, assignment_id) VALUES (? , ?)";
+    public static final String DELETE_BY_ASSIGNMENT_ID = "DELETE FROM assignment_nursehelper where assignment_id = ?;";
 
 
     @Override
@@ -44,8 +46,14 @@ public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentN
     }
 
     @Override
-    public void delete(int id) {
-
+    public void delete(long id) {
+        try (PreparedStatement ps = connection.prepareCall(DELETE_BY_ASSIGNMENT_ID)) {
+            ps.setLong(1, id);
+            ps.execute();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
     }
 
 

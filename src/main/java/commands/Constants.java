@@ -37,7 +37,7 @@ public interface Constants {
     public static final String PAGE_LOGIN = "/login.jsp";
     public static final String PAGE_ACCESS_DENIED = "/api/access_denied.jsp";
     public static final String PAGE_REGISTRATION = "/registration.jsp";
-
+    public static final String PAGE_SUCCESS= "/api/success.jsp";
 
 
     public static final String HREF_LIST_OF_NURSES = "/api/admin/nurses";
@@ -70,6 +70,7 @@ public interface Constants {
     public static final String REDIRECT_DOCTOR_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/doctor/assignmentInfo.jsp";
     public static final String REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID = PREFIX_REDIRECT+"redirect:/doctor/assignmentInfo?id=";
     public static final String REDIRECT_DOCTOR_MEDICAL_CARD_ID = PREFIX_REDIRECT+"redirect:/doctor/medicalCard?id=";
+    public static final String REDIRECT_DOCTOR_PATIENTS_HREF = PREFIX_REDIRECT+"/api/doctor/patients";
 
 
 
@@ -77,9 +78,14 @@ public interface Constants {
     public static final String REDIRECT_NURSE_ASSIGNMENT_INFO_ID = PREFIX_REDIRECT+"redirect:/nurse/assignmentInfo?id=";
     public static final String REDIRECT_NURSE_MEDICAL_CARD = PREFIX_REDIRECT+"/nurse/medicalCard.jsp";
     public static final String REDIRECT_NURSE_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/nurse/assignmentInfo.jsp";
+    public static final String REDIRECT_NURSE_PATIENTS = PREFIX_REDIRECT+"/nurse/patients.jsp";
+    public static final String REDIRECT_NURSE_MEDICAL_CARD_ID = PREFIX_REDIRECT+"redirect:/nurse/medicalCard?id=";
+    public static final String REDIRECT_NURSE_PATIENT_INFO = PREFIX_REDIRECT+"/nurse/patientInfo.jsp";
 
     public static final String REDIRECT_INDEX = PREFIX_REDIRECT+"/index.jsp";
-    public static final String REDIRECT_LOGOUT= PREFIX_REDIRECT+"/logout.jsp";
+    public static final String REDIRECT_SUCCESS= PREFIX_REDIRECT+"/success.jsp";
+    public static final String REDIRECT_LOGIN= PREFIX_REDIRECT+"/login.jsp";
+
 
 
 

@@ -41,9 +41,10 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
     private static final String UPDATE_DOCTORS_PATIENTS_NUMBER = "UPDATE users SET patients_number = ? WHERE id = ?";
     private static final String UPDATE_USER_TO_PATIENT = "UPDATE users SET role = ?, birth_date = ?, " +
             "on_treatment = ?, sex = ?, telephone_number = ?, doctor_id = ?, card_id = ? WHERE id = ?";
-    public static final String FROM_USERS_BY_ASSIGNMENT_ID = "SELECT * FROM users" +
+    public static final String FROM_USERS_BY_ASSIGNMENT_ID = "SELECT * FROM users " +
             " join assignment_nursehelper an on users.id = an.nurse_id where assignment_id = ?";
-
+    public static final String FROM_PATIENTS_BY_NURSE_ID = "SELECT *FROM users WHERE users.card_id in (select distinct(a.card_id) from assignment_nursehelper an" +
+            " join assignment a on a.id = an.assignment_id where an.nurse_id = ?)";
 
     @Override
     public User create(User user) {
@@ -93,7 +94,7 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 
@@ -107,7 +108,7 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
             if (rs.next()) {
                 return userMapper.extractFromResultSet(rs);
             }
-            throw new EntityNotFoundException("error.wrongCredential");
+            return null;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
@@ -120,6 +121,24 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
             List<User> users = new ArrayList<>();
             ps.setString(1, role.name());
             ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            while (rs.next()) {
+                users.add(userMapper.extractFromResultSet(rs));
+            }
+            return users;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<User> getUsersByNurseId(long id) {
+        try (PreparedStatement ps = connection.prepareCall(FROM_PATIENTS_BY_NURSE_ID)) {
+            List<User> users = new ArrayList<>();
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
             UserMapper userMapper = new UserMapper();
             while (rs.next()) {
                 users.add(userMapper.extractFromResultSet(rs));

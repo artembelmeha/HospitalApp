@@ -34,6 +34,9 @@ public class ShowPatientById implements Command {
         if(currentUser.isDoctor()) {
             return REDIRECT_DOCTOR_PATIENT_INFO;
         }
+        if(currentUser.isNurse()) {
+            return REDIRECT_NURSE_PATIENT_INFO;
+        }
         return null;
     }
 

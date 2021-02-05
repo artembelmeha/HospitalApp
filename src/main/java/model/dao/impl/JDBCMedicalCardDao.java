@@ -96,7 +96,7 @@ public class JDBCMedicalCardDao extends JDBCDao implements MedicalCardDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         // for future
     }
 

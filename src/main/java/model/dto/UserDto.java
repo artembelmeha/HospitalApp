@@ -114,5 +114,11 @@ public class UserDto {
     public boolean isNurse(){
         return this.role == Role.NURSE;
     }
+    public boolean isUndefine(){
+        return this.role == Role.UNDEFINE;
+    }
+    public boolean isPatient(){
+        return this.role == Role.PATIENT;
+    }
 
 }

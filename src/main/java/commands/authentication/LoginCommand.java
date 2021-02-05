@@ -39,10 +39,11 @@ public class LoginCommand implements Command {
             if (currentUser.isNurse()) {
                 return REDIRECT_NURSE_SUCCESS;
             }
-            return PAGE_ACCESS_DENIED;
+            return REDIRECT_SUCCESS;
         } catch (UnknownSqlException e) {
             LOGGER.error("Error caught while executing the method:", e);
-            session.setAttribute("login_fails", e.getMessage());
+            System.out.println(e.getMessage());
+            session.setAttribute(ERROR, e.getMessage());
             return PAGE_LOGIN;
         }
     }

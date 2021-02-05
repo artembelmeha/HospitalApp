@@ -27,7 +27,8 @@ public class DischargePatient implements Command {
         if (currentUser.isDoctor()) {
             medicalCardService.setFinalDiagnosisById(medicalCard);
             userService.dischargePatientByMedicalCardId(medicalCard.getId());
+            return REDIRECT_DOCTOR_PATIENTS_HREF;
         }
-        return null;
+        return PAGE_ACCESS_DENIED;
     }
 }
