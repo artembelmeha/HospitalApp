@@ -29,11 +29,27 @@
         <br>
         <table border="1">
             <tr>
-                <th><fmt:message key="login.firstName"/></th>
-                <th><fmt:message key="login.lastName"/></th>
+                <th>
+                    <a href="/api/admin/doctors?page=${currentPage}&sortBy=firstName">
+                    <fmt:message key="login.firstName"/>
+                    </a>
+                </th>
+                <th>
+                    <a href="/api/admin/doctors?page=${currentPage}&sortBy=lastName">
+                        <fmt:message key="login.lastName"/>
+                    </a>
+                </th>
                 <th><fmt:message key="login.email"/></th>
-                <th><fmt:message key="doctor.qualification"/></th>
-                <th><fmt:message key="doctor.numberOfPatient"/></th>
+                <th>
+                    <a href="/api/admin/doctors?page=${currentPage}&sortBy=qualification">
+                        <fmt:message key="doctor.qualification"/>
+                    </a>
+                </th>
+                <th>
+                    <a href="/api/admin/doctors?page=${currentPage}&sortBy=numberOfPatient">
+                    <fmt:message key="doctor.numberOfPatient"/>
+                    </a>
+                </th>
             </tr>
             <c:forEach items="${doctors}" var="doctor" varStatus="theCount">
                 <tr>
@@ -56,6 +72,39 @@
                 </tr>
             </c:forEach>
         </table>
+        <br>
+
+        <table border="1" cellpadding="2" cellspacing="2">
+            <tr>
+            <c:if test="${currentPage != 1}">
+                <td><a href="/api/admin/doctors?page=${currentPage - 1}&sortBy=${sortBy}">
+                <fmt:message key="form.previous"/>
+                </a></td>
+            </c:if>
+                <c:forEach begin="1" end="${noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <td>${i}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a href="/api/admin/doctors?page=${i}&sortBy=${sortBy}">${i}</a></td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:if test="${currentPage lt noOfPages}">
+                    <td><a href="/api/admin/doctors?page=${currentPage + 1}&sortBy=${sortBy}">
+                        <fmt:message key="form.next"/>
+                    </a></td>
+                </c:if>
+            </tr>
+        </table>
+
+
+
+
+
+
+
     </div>
 </div>
 </body>

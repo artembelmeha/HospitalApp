@@ -15,6 +15,7 @@ public interface Constants {
     public static final String UNDEFINED = "undefined";
     public static final String NURSES = "nurses";
     public static final String FREE_NURSES = "freeNurses";
+    public static final String NUMBER_OF_PATIENT = "numberOfPatient";
     public static final String DOCTORS = "doctors";
     public static final String TELEPHONE_NUMBER = "telephoneNumber";
     public static final String BIRTH_DATE = "birthDate";
@@ -91,4 +92,12 @@ public interface Constants {
     public static final String PARAMETER_QUANTITY = "quantity";
     public static final String PARAMETER_CURRENT_DIAGNOSIS = "currentDiagnosis";
     public static final String PARAMETER_FINAL_DIAGNOSIS = "finalDiagnosis";
+
+
+    public static final String ATTRIBUTE_NO_OF_PAGES = "noOfPages";
+    public static final String ATTRIBUTE_CURRENT_PAGE = "currentPage";
+    public static final String ATTRIBUTE_SORT_BY = "sortBy";
+    public static final String ATTRIBUTE_PAGE = "page";
+
+
 }

@@ -2,6 +2,7 @@ package model.dao.impl;
 
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
+import model.dao.JDBCDao;
 import model.dao.MedicalCardDao;
 import model.dao.mapper.MedicalCardMapper;
 import model.entity.MedicalCard;
@@ -14,10 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCMedicalCardDao implements MedicalCardDao {
+public class JDBCMedicalCardDao extends JDBCDao implements MedicalCardDao {
 
     private static final Logger LOGGER = Logger.getLogger(JDBCMedicalCardDao.class);
-    private Connection connection;
 
     private static final String INSERT_TEMPLATE = "INSERT INTO cards (final_diagnosis) VALUES (?)";
     public static final String CARDS_DIAGNOSIS = "SELECT * FROM cards WHERE final_diagnosis = ?";
@@ -26,7 +26,7 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
 
 
     public JDBCMedicalCardDao(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
     @Override
@@ -100,12 +100,4 @@ public class JDBCMedicalCardDao implements MedicalCardDao {
         // for future
     }
 
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new UnknownSqlException(e.getMessage());
-        }
-    }
 }

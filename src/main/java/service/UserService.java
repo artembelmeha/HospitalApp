@@ -1,6 +1,5 @@
 package service;
 
-import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.DaoFactory;
 import model.dao.UserDao;
@@ -33,30 +32,18 @@ public class UserService {
                 return user.getId();
             }
             throw new UnknownSqlException("error.wrongPassword");
-        } catch (UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw e;
         }
     }
 
     public User getUserByEmail(String email) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             return userDao.findUserByEmail(email);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
     public List<User> getUsersByRole(Role role) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             return userDao.getUsersByRole(role);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
@@ -82,20 +69,12 @@ public class UserService {
     public List<User> getUsersByDoctorId(long id) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             return userDao.getUserByDoctorId(id);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
     public User getUserById(long id) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             return userDao.findById(id);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
@@ -103,9 +82,6 @@ public class UserService {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.updateUserRole(id, NURSE);
             LOGGER.info("User #[" + id + "] was successfully assigned as nurse");
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
 
     }
@@ -113,9 +89,6 @@ public class UserService {
     public void assignAsDoctor(DoctorDto doctorDto) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.updateUserToDoctor(doctorDto);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 
@@ -130,9 +103,6 @@ public class UserService {
             User doctor = userDao.findById(patientDto.getDoctorId());
             userDao.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() + 1);
             LOGGER.info("User #[" + patientDto.getId() + "] was successfully assigned as patient");
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 
@@ -141,10 +111,6 @@ public class UserService {
             return userDao.getNurserByAssignmentID(id).stream()
                     .map(UserDto::new)
                     .collect(Collectors.toList());
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
@@ -155,10 +121,6 @@ public class UserService {
 
              User doctor = userDao.findById(user.getDoctorId());
              userDao.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() - 1);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 }

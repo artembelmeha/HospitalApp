@@ -28,12 +28,13 @@ public class ShowPatientById implements Command {
         session.setAttribute(DOCTOR_FULL_NAME, doctor.getFirstName() + " " + doctor.getLastName());
         session.setAttribute(QUALIFICATION, doctor.getQualification().name());
         session.setAttribute(PATIENT, new PatientDto(user));
-        if(currentUser.getRole() == Role.ADMIN) {
+        if(currentUser.isAdmin()) {
             return REDIRECT_ADMIN_PATIENT_INFO;
         }
-        if(currentUser.getRole() == Role.DOCTOR) {
+        if(currentUser.isDoctor()) {
             return REDIRECT_DOCTOR_PATIENT_INFO;
         }
         return null;
     }
+
 }

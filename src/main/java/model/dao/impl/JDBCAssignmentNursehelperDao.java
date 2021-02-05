@@ -2,6 +2,7 @@ package model.dao.impl;
 
 import exception.UnknownSqlException;
 import model.dao.AssignmentNursehelperDao;
+import model.dao.JDBCDao;
 import model.entity.User;
 import org.apache.log4j.Logger;
 
@@ -10,18 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JDBCAssignmentNursehelperDao implements AssignmentNursehelperDao {
+public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentNursehelperDao {
 
     private static final Logger LOGGER = Logger.getLogger(JDBCAssignmentNursehelperDao.class);
 
-    private Connection connection;
+    public JDBCAssignmentNursehelperDao(Connection connection) {
+        super(connection);
+    }
 
     public static final String INSERT_INTO_ASSIGNMENT_NURSEHELPER = "INSERT INTO assignment_nursehelper " +
             "(nurse_id, assignment_id) VALUES (? , ?)";
 
-    public JDBCAssignmentNursehelperDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public AssignmentNursehelperDao create(AssignmentNursehelperDao entity) {
@@ -48,14 +48,6 @@ public class JDBCAssignmentNursehelperDao implements AssignmentNursehelperDao {
 
     }
 
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public void addUserToAssignment(long nurseId, long assignmentId) {

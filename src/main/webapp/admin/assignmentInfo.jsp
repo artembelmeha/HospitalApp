@@ -96,12 +96,6 @@
                     <input type="text" value="${assignment.doneTimes}" disabled/>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <input class="addDone" type="submit" value="<fmt:message key="assignment.addOneExecution"/>"
-                           ${assignment.isComplete ? "disabled" : ""}>
-                </td>
-            </tr>
         </table>
     </form>
     <div class="m-1 p-1">
@@ -123,30 +117,6 @@
                     </td>
                     <td>
                         <a>${nurse.email}</a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
-        <p></p>
-        <h3><fmt:message key="assignment.addNurse"/></h3>
-        <table border="1">
-            <tr>
-                <th><fmt:message key="list.no"/></th>
-                <th><fmt:message key="list.fullName"/></th>
-                <th><fmt:message key="assignment.action"/></th>
-            </tr>
-            <c:forEach items="${freeNurses}" var="nurse" varStatus="theCount">
-                <tr>
-                    <td>
-                        <c:out value="${theCount.count}"/>
-                    </td>
-                    <td>
-                        <c:out value="${nurse.firstName}"/> <c:out value="${nurse.lastName}"/>
-                    </td>
-                    <td>
-                        <a href="/api/doctor/${assignment.id}/${nurse.id}" >
-                            <fmt:message key="assignment.assign"/>
-                        </a>
                     </td>
                 </tr>
             </c:forEach>

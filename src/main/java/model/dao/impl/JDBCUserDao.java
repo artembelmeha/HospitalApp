@@ -2,6 +2,7 @@ package model.dao.impl;
 
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
+import model.dao.JDBCDao;
 import model.dao.UserDao;
 import model.dao.mapper.UserMapper;
 import model.dto.DoctorDto;
@@ -15,9 +16,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCUserDao implements UserDao {
+public class JDBCUserDao extends JDBCDao implements UserDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
 
+    public JDBCUserDao(Connection connection) {
+        super(connection);
+    }
 
     private static final String INSERT_TEMPLATE =
             "INSERT INTO users (email, first_name, on_treatment, last_name, " +
@@ -40,12 +44,6 @@ public class JDBCUserDao implements UserDao {
     public static final String FROM_USERS_BY_ASSIGNMENT_ID = "SELECT * FROM users" +
             " join assignment_nursehelper an on users.id = an.nurse_id where assignment_id = ?";
 
-
-    private Connection connection;
-
-    public JDBCUserDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public User create(User user) {
@@ -99,14 +97,6 @@ public class JDBCUserDao implements UserDao {
 
     }
 
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public User findUserByEmail(String email) {

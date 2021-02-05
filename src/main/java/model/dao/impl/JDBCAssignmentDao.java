@@ -3,6 +3,7 @@ package model.dao.impl;
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
+import model.dao.JDBCDao;
 import model.dao.mapper.AssignmentMapper;
 import model.entity.Assignment;
 import org.apache.log4j.Logger;
@@ -11,11 +12,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCAssignmentDao implements AssignmentDao {
+public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
 
     private static final Logger LOGGER = Logger.getLogger(JDBCAssignmentDao.class);
 
-    private Connection connection;
+    public JDBCAssignmentDao(Connection connection) {
+        super(connection);
+    }
 
     public static final String FROM_ASSIGNMENT_WHERE_CARD_ID = "SELECT * FROM assignment WHERE card_id = ?";
     public static final String FROM_ASSIGNMENT_WHERE_ID = "SELECT * FROM assignment WHERE id = ?";
@@ -24,9 +27,6 @@ public class JDBCAssignmentDao implements AssignmentDao {
     private static final String INSERT_TEMPLATE = "INSERT INTO assignment (current_diagnosis, date, done_times, " +
             "is_complete, name, notes, quantity, type, card_id) VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    public JDBCAssignmentDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public List<Assignment> getAssignmentByMedicalCardId(long id) {
@@ -38,6 +38,7 @@ public class JDBCAssignmentDao implements AssignmentDao {
             while (rs.next()) {
                 assignments.add(assignmentMapper.extractFromResultSet(rs));
             }
+            rs.close();
             return assignments;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
@@ -113,12 +114,4 @@ public class JDBCAssignmentDao implements AssignmentDao {
 
     }
 
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
