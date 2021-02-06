@@ -1,6 +1,7 @@
 package commands.assignment;
 
 import commands.Command;
+import exception.InvalidDataException;
 import model.dto.UserDto;
 import model.entity.Assignment;
 import model.entity.AssignmentType;
@@ -25,12 +26,30 @@ public class AddAssignment implements Command {
         MedicalCard medicalCard = (MedicalCard) session.getAttribute(MEDICAL_CARD);
         UserDto currentUser = (UserDto) session.getAttribute(USER);
         if(currentUser.isDoctor()) {
-            Assignment assignment = getAssignmentFromSession(request);
+            Assignment assignment;
+
+            try {
+                assignment = getAssignmentFromSession(request);
+                validate(assignment);
+            } catch (Exception e) {
+                session.setAttribute(ERROR, "Data is invalid");
+                return PAGE_ADD_ASSIGNMENT;
+            }
+
             assignment.setCardId(medicalCard.getId());
             assignmentService.addAssignmentToMedicalCard(assignment);
             return REDIRECT_DOCTOR_MEDICAL_CARD_ID  + medicalCard.getId();
         }
         return PAGE_ACCESS_DENIED;
+    }
+
+    private void validate(Assignment assignment) throws InvalidDataException {
+        if (assignment.getDate().isAfter(LocalDate.now()) ) {
+            throw new InvalidDataException("Date is invalid");
+        }
+        if (assignment.getQuantity() < 1) {
+            throw new InvalidDataException("Quantity is less than 1");
+        }
     }
 
     private Assignment getAssignmentFromSession(HttpServletRequest request) {

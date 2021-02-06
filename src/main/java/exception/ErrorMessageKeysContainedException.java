@@ -10,7 +10,4 @@ public class ErrorMessageKeysContainedException extends RuntimeException {
         this.errorMessageKeys = errorMessageKeys;
     }
 
-    public List<String> getErrorMessageKeys() {
-        return errorMessageKeys;
-    }
 }
