@@ -22,6 +22,11 @@ public class AuthFilter implements Filter {
 
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
+
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
+        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
         HttpSession session = req.getSession();
         String contextPath = req.getContextPath().toLowerCase();
         String path = req.getRequestURI().toLowerCase();
@@ -45,4 +50,6 @@ public class AuthFilter implements Filter {
     public void destroy() {
 
     }
+
+
 }

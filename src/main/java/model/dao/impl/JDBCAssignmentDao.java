@@ -3,6 +3,8 @@ package model.dao.impl;
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
+import model.dao.AssignmentNursehelperDao;
+import model.dao.DaoFactory;
 import model.dao.JDBCDao;
 import model.dao.mapper.AssignmentMapper;
 import model.entity.Assignment;
@@ -26,6 +28,7 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
             "is_complete = ?, name = ?, notes = ?, quantity = ?, type = ? WHERE  id = ?";
     private static final String INSERT_TEMPLATE = "INSERT INTO assignment (current_diagnosis, date, done_times, " +
             "is_complete, name, notes, quantity, type, card_id) VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String DELETE_FROM_HELPER_BY_ASSIGNMENT_ID = "DELETE FROM assignment_nursehelper where assignment_id = ?;";
 
 
     @Override
@@ -91,8 +94,9 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
     }
 
     @Override
-    public void update(Assignment assignment) {
-        try (PreparedStatement ps = connection.prepareCall(UPDATE_TEMPLATE)) {
+    public void update(Assignment assignment) throws SQLException {
+        try (PreparedStatement ps = connection.prepareCall(UPDATE_TEMPLATE);
+             PreparedStatement ps1 = connection.prepareCall(DELETE_FROM_HELPER_BY_ASSIGNMENT_ID);) {
             ps.setString(1, assignment.getCurrentDiagnosis());
             ps.setDate(2, Date.valueOf(assignment.getDate()));
             ps.setInt(3, assignment.getDoneTimes());
@@ -102,8 +106,19 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
             ps.setInt(7, assignment.getQuantity());
             ps.setString(8, assignment.getType().name());
             ps.setLong(9, assignment.getId());
+
+            this.connection.setAutoCommit(false);
+            if (assignment.getDoneTimes() == assignment.getQuantity()) {
+                ps.setBoolean(4, true);
+                ps1.setLong(1, assignment.getId());
+                ps1.execute();
+                LOGGER.info("Assignment with id #[ " +assignment.getId() + " ] was discharged from nurses!");
+            }
             ps.execute();
+            this.connection.setAutoCommit(true);
+
         } catch (SQLException e) {
+            this.connection.rollback();
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }

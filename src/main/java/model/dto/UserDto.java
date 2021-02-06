@@ -3,9 +3,16 @@ package model.dto;
 import model.entity.Role;
 import model.entity.User;
 
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class UserDto {
+import static model.entity.Role.UNDEFINE;
+
+public class UserDto implements HttpSessionBindingListener {
 
     private long id;
     private String firstName;
@@ -14,6 +21,7 @@ public class UserDto {
     private Role role;
     private String password;
 
+    private static Map<UserDto, HttpSession> logins = new HashMap<>();
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -81,6 +89,19 @@ public class UserDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public User getUser() {
+        User user = new User();
+        user.setPassword(this.getPassword());
+        user.setRole(UNDEFINE);
+        user.setEmail(this.getEmail());
+        user.setLastName(this.getLastName());
+        user.setFirstName(this.getFirstName());
+        user.setOnTreatment(false);
+        user.setPatientsNumber(0);
+        return user;
+    }
+
     @Override
     public String toString() {
         return "UserDto{" +
@@ -121,4 +142,17 @@ public class UserDto {
         return this.role == Role.PATIENT;
     }
 
+    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        HttpSession session = logins.get(this);
+        if(session != null) {
+            session.invalidate();
+        }
+        logins.put(this, event.getSession());
+    }
+
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        logins.remove(this);
+    }
 }

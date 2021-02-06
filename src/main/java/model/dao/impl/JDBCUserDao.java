@@ -182,7 +182,7 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
     }
 
     @Override
-    public void updateUserToPatient(PatientDto patientDto) {
+    public void updateUserToPatient(PatientDto patientDto) throws SQLException {
         try(PreparedStatement ps = connection.prepareCall(UPDATE_USER_TO_PATIENT)) {
             ps.setString( 1, Role.PATIENT.name());
             ps.setDate( 2, Date.valueOf(patientDto.getBirthDate()));
@@ -192,8 +192,13 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
             ps.setLong( 6, patientDto.getDoctorId());
             ps.setLong( 7, patientDto.getCardId());
             ps.setLong( 8, patientDto.getId());
+            User doctor = this.findById(patientDto.getDoctorId());
+            this.connection.setAutoCommit(false);
             ps.executeUpdate();
+            this.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() + 1);
+            this.connection.setAutoCommit(true);
         }catch (Exception e) {
+            this.connection.rollback();
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
@@ -249,14 +254,19 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
     }
 
     @Override
-    public void dischargePatient(User user){
+    public void dischargePatient(User user) throws SQLException {
         try(PreparedStatement ps = connection.prepareCall(UPDATE_USER_DISCHARGE)) {
             ps.setBoolean( 1, false);
             ps.setString( 2, Role.UNDEFINE.name());
             ps.setString(3, null);
             ps.setLong(4, user.getId());
+            this.connection.setAutoCommit(false);
+            User doctor = this.findById(user.getDoctorId());
             ps.executeUpdate();
+            this.updateDoctorPatientsNumber(doctor.getId(), doctor.getPatientsNumber() - 1);
+            this.connection.setAutoCommit(true);
         } catch (Exception e) {
+            this.connection.rollback();
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }

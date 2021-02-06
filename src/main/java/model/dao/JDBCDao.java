@@ -18,12 +18,4 @@ public abstract class JDBCDao {
             throw new RuntimeException(e);
         }
     }
-    protected void handleConnectionAfterException(Connection connection) {
-        try {
-            connection.rollback();
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            throw new UnknownSqlException(e.getMessage());
-        }
-    }
 }

@@ -7,6 +7,8 @@ import model.dao.MedicalCardDao;
 import model.entity.MedicalCard;
 import org.apache.log4j.Logger;
 
+import java.sql.SQLException;
+
 public class MedicalCardService {
 
     private static final Logger LOGGER = Logger.getLogger(MedicalCardService.class);
@@ -34,10 +36,9 @@ public class MedicalCardService {
     public void setFinalDiagnosisById(MedicalCard medicalCard) {
         try (MedicalCardDao medicalCardDao = DaoFactory.getInstance().createMedicalCardDao()) {
             medicalCardDao.update(medicalCard);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
+        } catch (EntityNotFoundException | UnknownSqlException | SQLException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 }

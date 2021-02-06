@@ -7,6 +7,7 @@ import model.dto.PatientDto;
 import model.entity.Role;
 import model.entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao extends GenericDao<User>{
@@ -21,7 +22,7 @@ public interface UserDao extends GenericDao<User>{
 
     void updateUserToDoctor(DoctorDto doctorDto);
 
-    void updateUserToPatient(PatientDto patientDto);
+    void updateUserToPatient(PatientDto patientDto) throws SQLException;
 
     void updateDoctorPatientsNumber(Long id, int patientsNumber);
 
@@ -29,7 +30,8 @@ public interface UserDao extends GenericDao<User>{
 
     User getUserByMedicalCardId(long medicalCardId);
 
-     void dischargePatient(User user);
+     void dischargePatient(User user) throws SQLException;
+
 
     List<User> getUsersByNurseId(long id);
 }

@@ -1,5 +1,6 @@
-package commands;
+package controller;
 
+import commands.Command;
 import commands.assignment.AddAssignment;
 import commands.assignment.AddOneExecution;
 import commands.assignment.AssignmentInfo;

@@ -38,7 +38,7 @@
 
   <servlet>
     <servlet-name>HospitalServlet</servlet-name>
-    <servlet-class>commands.HospitalServlet</servlet-class>
+    <servlet-class>controller.HospitalServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

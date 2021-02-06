@@ -42,7 +42,7 @@
                     <label><fmt:message key="assignment.date"/>:</label>
                 </td>
                 <td>
-                    <input type="date" name="date" />
+                    <input type="date" name="date"/>
                 </td>
             </tr>
             <tr>
