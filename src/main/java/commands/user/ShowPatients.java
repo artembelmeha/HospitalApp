@@ -1,7 +1,6 @@
 package commands.user;
 
 import commands.Command;
-import model.dto.DoctorDto;
 import model.dto.PatientDto;
 import model.dto.UserDto;
 import model.entity.Role;

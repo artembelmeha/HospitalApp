@@ -1,7 +1,5 @@
 package model.dto;
 
-import model.entity.Qualification;
-import model.entity.Role;
 import model.entity.Sex;
 import model.entity.User;
 
@@ -78,5 +76,15 @@ public class PatientDto extends UserDto {
     public String toString() {
         return "Patient{" +
                 "isOnTreatment=" + isOnTreatment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

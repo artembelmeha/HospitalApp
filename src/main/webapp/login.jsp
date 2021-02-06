@@ -38,7 +38,7 @@
         <div class="is-invalid" id="test" style="color: #ff0000">
             <fmt:message  key="error.wrongCredential"/>
         </div>
-        <c:remove var="login_fails" scope="session" />
+        <c:remove var="error" scope="session" />
     </c:if>
 
     <table >

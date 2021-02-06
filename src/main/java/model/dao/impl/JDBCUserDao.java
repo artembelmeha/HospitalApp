@@ -7,7 +7,6 @@ import model.dao.UserDao;
 import model.dao.mapper.UserMapper;
 import model.dto.DoctorDto;
 import model.dto.PatientDto;
-import model.entity.Qualification;
 import model.entity.Role;
 import model.entity.User;
 import org.apache.log4j.Logger;
@@ -84,18 +83,15 @@ public class JDBCUserDao extends JDBCDao implements UserDao {
         }
     }
 
-    @Override
-    public List findAll() {
-        return null;
-    }
 
     @Override
     public void update(User user) {
+        //for future
     }
 
     @Override
     public void delete(long id) {
-
+        //for future
     }
 
 

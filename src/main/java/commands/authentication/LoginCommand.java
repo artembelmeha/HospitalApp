@@ -42,7 +42,6 @@ public class LoginCommand implements Command {
             return REDIRECT_SUCCESS;
         } catch (UnknownSqlException e) {
             LOGGER.error("Error caught while executing the method:", e);
-            System.out.println(e.getMessage());
             session.setAttribute(ERROR, e.getMessage());
             return PAGE_LOGIN;
         }

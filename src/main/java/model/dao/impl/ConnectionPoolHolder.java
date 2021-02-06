@@ -7,6 +7,10 @@ import javax.sql.DataSource;
 public class ConnectionPoolHolder {
 
 
+    public static final String MYSQL_LOCALHOST_3306_HOSPITAL = "jdbc:mysql://localhost:3306/hospital";
+    public static final String COM_MYSQL_CJ_JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    public static final String USER_NAME = "root";
+    public static final String PASSWORD = "12345678";
     private static volatile DataSource dataSource;
 
     public static DataSource getDataSource(){
@@ -14,10 +18,10 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-                    ds.setUrl("jdbc:mysql://localhost:3306/hospital");
-                    ds.setUsername("root");
-                    ds.setPassword("12345678");
+                    ds.setDriverClassName(COM_MYSQL_CJ_JDBC_DRIVER);
+                    ds.setUrl(MYSQL_LOCALHOST_3306_HOSPITAL);
+                    ds.setUsername(USER_NAME);
+                    ds.setPassword(PASSWORD);
                     ds.setMinIdle(5);
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);

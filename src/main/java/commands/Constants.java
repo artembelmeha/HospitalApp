@@ -60,7 +60,7 @@ public interface Constants {
     public static final String REDIRECT_ADMIN_PATIENTS = PREFIX_REDIRECT+"/admin/patients.jsp";
     public static final String REDIRECT_ADMIN_PATIENT_INFO = PREFIX_REDIRECT+"/admin/patientInfo.jsp";
     public static final String REDIRECT_ADMIN_REGISTER_DOCTOR = PREFIX_REDIRECT+"/admin/registerDoctor.jsp";
-    public static final String REDIRECT_ADMIN_REGISTER_PATIENT = PREFIX_REDIRECT+"/admin/registerPatient.jsp";
+    public static final String REDIRECT_ADMIN_REGISTER_PATIENT = PREFIX_REDIRECT+PAGE_REGISTRATION_PATIENT;
     public static final String REDIRECT_ADMIN_MEDICAL_CARD = PREFIX_REDIRECT+"/admin/medicalCard.jsp";
     public static final String REDIRECT_ADMIN_ASSIGNMENT_INFO = PREFIX_REDIRECT+"/admin/assignmentInfo.jsp";
 
@@ -86,7 +86,7 @@ public interface Constants {
 
     public static final String REDIRECT_INDEX = PREFIX_REDIRECT+"/index.jsp";
     public static final String REDIRECT_SUCCESS= PREFIX_REDIRECT+"/success.jsp";
-    public static final String REDIRECT_LOGIN= PREFIX_REDIRECT+"/login.jsp";
+    public static final String REDIRECT_LOGIN= PREFIX_REDIRECT+PAGE_LOGIN;
 
 
 

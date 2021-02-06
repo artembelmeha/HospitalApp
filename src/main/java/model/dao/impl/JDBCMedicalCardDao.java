@@ -12,8 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JDBCMedicalCardDao extends JDBCDao implements MedicalCardDao {
 
@@ -78,10 +76,6 @@ public class JDBCMedicalCardDao extends JDBCDao implements MedicalCardDao {
         }
     }
 
-    @Override
-    public List<MedicalCard> findAll() {
-        return new ArrayList<>();
-    }
 
     @Override
     public void update(MedicalCard entity) {

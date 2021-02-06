@@ -20,6 +20,7 @@ public class User {
     private int patientsNumber;
 
     public User() {
+        //constructor
     }
 
     public long getId() {

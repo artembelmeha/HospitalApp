@@ -1,7 +1,6 @@
 package filters;
 
 import model.dto.UserDto;
-import model.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +31,6 @@ public class AuthFilter implements Filter {
         String path = req.getRequestURI().toLowerCase();
         String mod = path.replaceFirst(".*api/","");
         UserDto currentUser = (UserDto) session.getAttribute("user");
-
-        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        res.setDateHeader("Expires", 0); // Proxies.
 
         if (currentUser != null && mod.contains("/")) {
             if (!path.contains(currentUser.getRole().name().toLowerCase())) {

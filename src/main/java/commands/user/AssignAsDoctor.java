@@ -21,7 +21,7 @@ public class AssignAsDoctor implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         UserDto currentUser = (UserDto) session.getAttribute(USER);
-        if (currentUser.getRole() == Role.ADMIN) {
+        if (currentUser.isAdmin()) {
             DoctorDto doctorDto = (DoctorDto) session.getAttribute(DOCTOR);
             String qualification = request.getParameter(QUALIFICATION);
             doctorDto.setQualification(Qualification.valueOf(qualification));

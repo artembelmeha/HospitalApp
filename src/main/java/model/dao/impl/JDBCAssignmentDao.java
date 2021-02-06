@@ -3,8 +3,6 @@ package model.dao.impl;
 import exception.EntityNotFoundException;
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
-import model.dao.AssignmentNursehelperDao;
-import model.dao.DaoFactory;
 import model.dao.JDBCDao;
 import model.dao.mapper.AssignmentMapper;
 import model.entity.Assignment;
@@ -62,7 +60,7 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
             ps.setString(8, assignment.getType().name());
             ps.setLong(9, assignment.getCardId());
             ps.execute();
-            return assignment;  //todo
+            return assignment;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
@@ -86,12 +84,6 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
         }
     }
 
-
-
-    @Override
-    public List<Assignment> findAll() {
-        return null;
-    }
 
     @Override
     public void update(Assignment assignment) throws SQLException {
@@ -126,7 +118,7 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
 
     @Override
     public void delete(long id) {
-
+        //for future
     }
 
 }

@@ -1,7 +1,5 @@
 package model.dao;
 
-import exception.ErrorMessageKeysContainedException;
-import exception.UnknownSqlException;
 import model.dto.DoctorDto;
 import model.dto.PatientDto;
 import model.entity.Role;
@@ -12,9 +10,9 @@ import java.util.List;
 
 public interface UserDao extends GenericDao<User>{
 
-    User findUserByEmail(String email) throws UnknownSqlException, ErrorMessageKeysContainedException;
+    User findUserByEmail(String email);
 
-    List<User> getUsersByRole(Role role) throws UnknownSqlException, ErrorMessageKeysContainedException;
+    List<User> getUsersByRole(Role role);
 
     List<User> getUserByDoctorId(long id);
 

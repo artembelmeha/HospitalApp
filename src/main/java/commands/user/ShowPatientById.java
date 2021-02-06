@@ -3,7 +3,6 @@ package commands.user;
 import commands.Command;
 import model.dto.PatientDto;
 import model.dto.UserDto;
-import model.entity.Role;
 import model.entity.User;
 import service.ServiceFactory;
 import service.UserService;

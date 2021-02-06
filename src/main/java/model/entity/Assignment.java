@@ -1,7 +1,6 @@
 package model.entity;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public class Assignment {
 
@@ -17,6 +16,7 @@ public class Assignment {
     private long cardId;
 
     public Assignment() {
+        //constructor
     }
 
     public long getId() {

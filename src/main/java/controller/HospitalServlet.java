@@ -35,7 +35,6 @@ public class HospitalServlet extends HttpServlet {
                 .setAttribute("loggedUsers", new HashSet<String>());
         commands.put("login", new LoginCommand());
         commands.put("registration", new RegistrationCommand());
-        commands.put("error", new ErrorCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("admin/users", new ShowUndefineUsers());
         commands.put("admin/nurses", new ShowNurses());
@@ -81,7 +80,7 @@ public class HospitalServlet extends HttpServlet {
         String path = request.getRequestURI();
         path = path.replaceAll(".*/api/" , EMPTY_STRING);
         path = path.replaceAll(".jsp",EMPTY_STRING);
-        Command command = commands.getOrDefault(path , (r)->"/index.jsp");
+        Command command = commands.getOrDefault(path , r->"/index.jsp");
         LOGGER.info(command.getClass().getName());
         String page = command.execute(request);
         if(page.contains(PREFIX_REDIRECT)){

@@ -3,14 +3,11 @@ package model.dao.impl;
 import exception.UnknownSqlException;
 import model.dao.AssignmentNursehelperDao;
 import model.dao.JDBCDao;
-import model.entity.MedicalCard;
-import model.entity.User;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentNursehelperDao {
 
@@ -35,14 +32,10 @@ public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentN
         return null;
     }
 
-    @Override
-    public List<AssignmentNursehelperDao> findAll() {
-        return null;
-    }
 
     @Override
     public void update(AssignmentNursehelperDao entity) {
-
+        //for future
     }
 
     @Override

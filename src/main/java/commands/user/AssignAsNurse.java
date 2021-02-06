@@ -19,7 +19,7 @@ public class AssignAsNurse implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         UserDto currentUser = (UserDto) session.getAttribute(USER);
-        if(currentUser.getRole() == Role.ADMIN) {
+        if(currentUser.isAdmin()) {
             long userId = Long.parseLong(request.getParameterValues(ID)[0]);
             userService.assignAsNurse(userId);
             return HREF_LIST_OF_NURSES;
