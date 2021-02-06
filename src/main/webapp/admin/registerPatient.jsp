@@ -17,11 +17,18 @@
 <fmt:setBundle basename="messages"/>
 
 <html lang="${sessionScope.lang}">
+
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css"
           integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
     <title><fmt:message key="patient.patientRegistration"/></title>
 </head>
+<script>
+    function clearError()
+    {
+        document.getElementById("test").remove();
+    }
+</script>
 <body>
 <jsp:include page="../header.jsp"/>
     <div class="m-5 p-1">
@@ -29,6 +36,14 @@
         <h2><fmt:message key="patient.patientRegistration"/></h2>
         <br>
         <form method="POST" action="/api/admin/assignAsPatient">
+            <c:set var = "status" scope = "page" value = "${error.length()>5 ? 'is-invalid' : ''}"/>
+
+            <c:if test="${status eq 'is-invalid'}" >
+                <div class="is-invalid" id="test" style="color: #ff0000">
+                    <fmt:message  key="error.wrongData"/>
+                </div>
+                <c:remove var="error" scope="session" />
+            </c:if>
             <table>
                 <tr>
                     <td>

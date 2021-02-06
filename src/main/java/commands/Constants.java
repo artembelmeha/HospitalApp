@@ -39,6 +39,7 @@ public interface Constants {
     public static final String PAGE_REGISTRATION = "/registration.jsp";
     public static final String PAGE_SUCCESS= "/api/success.jsp";
     public static final String PAGE_ADD_ASSIGNMENT= "/doctor/addAssignment.jsp";
+    public static final String PAGE_REGISTRATION_PATIENT= "/admin/registerPatient.jsp";
 
 
     public static final String HREF_LIST_OF_NURSES = "/api/admin/nurses";

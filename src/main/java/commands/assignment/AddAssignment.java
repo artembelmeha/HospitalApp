@@ -27,7 +27,6 @@ public class AddAssignment implements Command {
         UserDto currentUser = (UserDto) session.getAttribute(USER);
         if(currentUser.isDoctor()) {
             Assignment assignment;
-
             try {
                 assignment = getAssignmentFromSession(request);
                 validate(assignment);
@@ -35,7 +34,6 @@ public class AddAssignment implements Command {
                 session.setAttribute(ERROR, "Data is invalid");
                 return PAGE_ADD_ASSIGNMENT;
             }
-
             assignment.setCardId(medicalCard.getId());
             assignmentService.addAssignmentToMedicalCard(assignment);
             return REDIRECT_DOCTOR_MEDICAL_CARD_ID  + medicalCard.getId();
