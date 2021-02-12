@@ -1,16 +1,17 @@
 package model.dao.impl;
 
-import exception.EntityNotFoundException;
+import static model.dao.mapper.AssignmentMapper.extractAssignment;
+import static model.dao.mapper.AssignmentMapper.extractAssignments;
+
+import java.sql.*;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
 import model.dao.JDBCDao;
-import model.dao.mapper.AssignmentMapper;
 import model.entity.Assignment;
-import org.apache.log4j.Logger;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
 
@@ -20,27 +21,20 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
         super(connection);
     }
 
-    public static final String FROM_ASSIGNMENT_WHERE_CARD_ID = "SELECT * FROM assignment WHERE card_id = ?";
-    public static final String FROM_ASSIGNMENT_WHERE_ID = "SELECT * FROM assignment WHERE id = ?";
-    private static final String UPDATE_TEMPLATE = "UPDATE assignment SET current_diagnosis = ?, date = ?, done_times = ?, " +
+    private static final String GET_ASSIGNMENT_BY_CARD_ID = "SELECT * FROM assignment WHERE card_id = ?";
+    private static final String GET_ASSIGNMENT_BY_ID = "SELECT * FROM assignment WHERE id = ?";
+    private static final String UPDATE_ASSIGNMENT = "UPDATE assignment SET current_diagnosis = ?, date = ?, done_times = ?, " +
             "is_complete = ?, name = ?, notes = ?, quantity = ?, type = ? WHERE  id = ?";
-    private static final String INSERT_TEMPLATE = "INSERT INTO assignment (current_diagnosis, date, done_times, " +
+    private static final String CREATE_ASSIGNMENT_QUERY = "INSERT INTO assignment (current_diagnosis, date, done_times, " +
             "is_complete, name, notes, quantity, type, card_id) VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    public static final String DELETE_FROM_HELPER_BY_ASSIGNMENT_ID = "DELETE FROM assignment_nursehelper where assignment_id = ?;";
+    private static final String DELETE_FROM_HELPER_BY_ASSIGNMENT_ID = "DELETE FROM assignment_nursehelper where assignment_id = ?;";
 
 
     @Override
-    public List<Assignment> getAssignmentByMedicalCardId(long id) {
-        try (PreparedStatement ps = connection.prepareCall(FROM_ASSIGNMENT_WHERE_CARD_ID)) {
-            List<Assignment> assignments = new ArrayList<>();
+    public List<Assignment> getAssignmentsByMedicalCardId(long id) {
+        try (PreparedStatement ps = connection.prepareCall(GET_ASSIGNMENT_BY_CARD_ID)) {
             ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
-            AssignmentMapper assignmentMapper = new AssignmentMapper();
-            while (rs.next()) {
-                assignments.add(assignmentMapper.extractFromResultSet(rs));
-            }
-            rs.close();
-            return assignments;
+            return extractAssignments(ps.executeQuery());
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
@@ -49,7 +43,7 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
 
     @Override
     public Assignment create(Assignment assignment) {
-        try (PreparedStatement ps = connection.prepareCall(INSERT_TEMPLATE)) {
+        try (PreparedStatement ps = connection.prepareCall(CREATE_ASSIGNMENT_QUERY)) {
             ps.setString(1, assignment.getCurrentDiagnosis());
             ps.setDate(2, Date.valueOf(assignment.getDate()));
             ps.setInt(3, assignment.getDoneTimes());
@@ -69,26 +63,18 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
 
     @Override
     public Assignment findById(long id) {
-        try (PreparedStatement ps = connection.prepareCall(FROM_ASSIGNMENT_WHERE_ID)) {
+        try (PreparedStatement ps = connection.prepareCall(GET_ASSIGNMENT_BY_ID)) {
             ps.setString(1, String.valueOf(id));
-            ResultSet rs = ps.executeQuery();
-            AssignmentMapper assignmentMapper = new AssignmentMapper();
-            if (rs.next()) {
-                return assignmentMapper.extractFromResultSet(rs);
-            }
-            LOGGER.error("There is no assignment with id [" + id + "]");
-            throw new EntityNotFoundException("There is no assignment with id [" + id + "]");
-        } catch (Exception e) {
+            return extractAssignment(ps.executeQuery(), "There is no assignment with id [" + id + "]");
+        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
     }
 
-
     @Override
-    public void update(Assignment assignment) throws SQLException {
-        try (PreparedStatement ps = connection.prepareCall(UPDATE_TEMPLATE);
-             PreparedStatement ps1 = connection.prepareCall(DELETE_FROM_HELPER_BY_ASSIGNMENT_ID);) {
+    public void update(Assignment assignment) {
+        try (PreparedStatement ps = connection.prepareCall(UPDATE_ASSIGNMENT)) {
             ps.setString(1, assignment.getCurrentDiagnosis());
             ps.setDate(2, Date.valueOf(assignment.getDate()));
             ps.setInt(3, assignment.getDoneTimes());
@@ -98,19 +84,8 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
             ps.setInt(7, assignment.getQuantity());
             ps.setString(8, assignment.getType().name());
             ps.setLong(9, assignment.getId());
-
-            this.connection.setAutoCommit(false);
-            if (assignment.getDoneTimes() == assignment.getQuantity()) {
-                ps.setBoolean(4, true);
-                ps1.setLong(1, assignment.getId());
-                ps1.execute();
-                LOGGER.info("Assignment with id #[ " +assignment.getId() + " ] was discharged from nurses!");
-            }
             ps.execute();
-            this.connection.setAutoCommit(true);
-
         } catch (SQLException e) {
-            this.connection.rollback();
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
@@ -121,4 +96,14 @@ public class JDBCAssignmentDao extends JDBCDao implements AssignmentDao {
         //for future
     }
 
+    @Override
+    public void cleanupAssignmentRefWhenCompleted(long id) {
+        try (PreparedStatement ps = connection.prepareCall(DELETE_FROM_HELPER_BY_ASSIGNMENT_ID)) {
+            ps.setLong(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            LOGGER.error("Error during [cleanupAssignmentRefWhenCompleted].", e);
+            throw new UnknownSqlException(e.getMessage());
+        }
+    }
 }

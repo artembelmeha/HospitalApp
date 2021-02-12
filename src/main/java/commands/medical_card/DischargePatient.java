@@ -24,8 +24,9 @@ public class DischargePatient implements Command {
         String diagnosis = request.getParameter(PARAMETER_FINAL_DIAGNOSIS);
         MedicalCard medicalCard = (MedicalCard) session.getAttribute(MEDICAL_CARD);
         medicalCard.setFinalDiagnosis(diagnosis);
+
         if (currentUser.isDoctor()) {
-            medicalCardService.setFinalDiagnosisById(medicalCard);
+            medicalCardService.update(medicalCard);
             userService.dischargePatientByMedicalCardId(medicalCard.getId());
             return REDIRECT_DOCTOR_PATIENTS_HREF;
         }

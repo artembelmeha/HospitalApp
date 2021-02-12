@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class JDBCDaoFactory extends DaoFactory {
     private static final Logger LOGGER = Logger.getLogger(JDBCDaoFactory.class);
 
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
+    private final DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
 
     @Override
@@ -25,7 +25,7 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public AssignmentDao createAssignmentDao() {
+    public AssignmentDao getAssignmentDao() {
         return new JDBCAssignmentDao(getConnection());
     }
 

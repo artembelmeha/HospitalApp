@@ -26,7 +26,7 @@ public class HospitalServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(HospitalServlet.class);
 
-    private static Map<String, Command> commands = new HashMap<>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
     @Override
     public void init(ServletConfig servletConfig){

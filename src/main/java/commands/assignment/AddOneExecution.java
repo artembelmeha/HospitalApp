@@ -1,16 +1,16 @@
 package commands.assignment;
 
+import static commands.Constants.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import commands.Command;
 import model.dto.UserDto;
 import model.entity.Assignment;
 import model.entity.AssignmentType;
 import service.AssignmentService;
 import service.ServiceFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import static commands.Constants.*;
 
 public class AddOneExecution implements Command {
 
@@ -19,16 +19,18 @@ public class AddOneExecution implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Assignment assignment = (Assignment) session.getAttribute(ASSIGNMENT);
         UserDto currentUser = (UserDto) session.getAttribute(USER);
-        if(currentUser.isDoctor()) {
-            assignmentService.addOneExecutionById(assignment.getId());
-            return REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID  + assignment.getId();
+        Assignment assignment = (Assignment) session.getAttribute(ASSIGNMENT);
+        long assignmentId = assignment.getId();
+
+        if (currentUser.isDoctor()) {
+            assignmentService.addOneExecutionById(assignmentId);
+            return REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID + assignmentId;
+        } else if (currentUser.isNurse() && assignment.getType() != AssignmentType.SURGERY) {
+            assignmentService.addOneExecutionById(assignmentId);
+            return REDIRECT_NURSE_ASSIGNMENT_INFO_ID + assignmentId;
         }
-        if(currentUser.isNurse() && assignment.getType() != AssignmentType.SURGERY) {
-            assignmentService.addOneExecutionById(assignment.getId());
-            return REDIRECT_NURSE_ASSIGNMENT_INFO_ID  + assignment.getId();
-        }
+
         return PAGE_ACCESS_DENIED;
     }
 }

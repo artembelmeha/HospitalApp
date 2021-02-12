@@ -7,11 +7,28 @@ import model.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class UserMapper {
 
-    public User extractFromResultSet(ResultSet rs) throws SQLException {
+    public static User extractUser(ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return extractFromResultSet(resultSet);
+        }
+        return null;
+    }
+
+    public static List<User> extractUsers(ResultSet resultSet) throws SQLException {
+        List<User> users = new ArrayList<>();
+        while (resultSet.next()) {
+            users.add(extractFromResultSet(resultSet));
+        }
+        return users;
+    }
+
+    public static User extractFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getLong("id"));
         user.setFirstName(rs.getString("first_name"));

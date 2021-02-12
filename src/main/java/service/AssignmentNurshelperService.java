@@ -1,13 +1,13 @@
 package service;
 
-import exception.EntityNotFoundException;
-import exception.UnknownSqlException;
-import model.dao.AssignmentNursehelperDao;
-import model.dao.DaoFactory;
 import org.apache.log4j.Logger;
 
+import model.dao.AssignmentNursehelperDao;
+import model.dao.DaoFactory;
+
+
 public class AssignmentNurshelperService {
-    private static final Logger LOGGER = Logger.getLogger(AssignmentNurshelperService.class);
+	private static final Logger LOGGER = Logger.getLogger(AssignmentNurshelperService.class);
 
     public void addNurseToAssignment(long nurseId, long assignmentId) {
         try (AssignmentNursehelperDao assignmentNursehelperDao =

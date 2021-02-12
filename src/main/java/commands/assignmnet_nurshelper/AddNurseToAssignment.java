@@ -21,9 +21,10 @@ public class AddNurseToAssignment implements Command {
         long nurseId = Long.parseLong(request.getParameterValues(PARAMETER_ID)[0]);
         Assignment assignment = (Assignment) session.getAttribute(ASSIGNMENT);
         UserDto currentUser = (UserDto) session.getAttribute(USER);
-        if(currentUser.isDoctor()) {
-            assignmentNurshelperService.addNurseToAssignment(nurseId,assignment.getId());
-            return REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID  + assignment.getId();
+
+        if (currentUser.isDoctor()) {
+            assignmentNurshelperService.addNurseToAssignment(nurseId, assignment.getId());
+            return REDIRECT_DOCTOR_ASSIGNMENT_INFO_ID + assignment.getId();
         }
         return PAGE_ACCESS_DENIED;
     }

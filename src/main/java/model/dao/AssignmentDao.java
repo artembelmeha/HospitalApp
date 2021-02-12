@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface AssignmentDao extends GenericDao<Assignment> {
 
-    List<Assignment> getAssignmentByMedicalCardId(long id);
+    List<Assignment> getAssignmentsByMedicalCardId(long id);
+
+    void cleanupAssignmentRefWhenCompleted(long id);
 }

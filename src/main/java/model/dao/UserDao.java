@@ -20,16 +20,15 @@ public interface UserDao extends GenericDao<User>{
 
     void updateUserToDoctor(DoctorDto doctorDto);
 
-    void updateUserToPatient(PatientDto patientDto) throws SQLException;
+    void updateUserToPatient(PatientDto patientDto);
 
-    void updateDoctorPatientsNumber(Long id, int patientsNumber);
+    void updateDoctorPatientsNumber(long id, boolean increment);
 
-    List<User> getNurserByAssignmentID(long id);
+    List<User> getNurserByAssignmentId(long id);
 
     User getUserByMedicalCardId(long medicalCardId);
 
-     void dischargePatient(User user) throws SQLException;
-
+    void dischargePatient(User user);
 
     List<User> getUsersByNurseId(long id);
 }

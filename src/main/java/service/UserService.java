@@ -12,7 +12,6 @@ import model.entity.User;
 import org.apache.log4j.Logger;
 import utils.EncryptUtil;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +20,12 @@ import static model.entity.Role.NURSE;
 
 
 public class UserService {
-
-    public static final String USER_NO = "User #[";
-    public static final String WAS_ASSIGNED_AS = "] was successfully assigned as ";
-    private static MedicalCardService medicalCardService = ServiceFactory.getInstance().getCardService();
-
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
+
+    private static final String USER_NO = "User #[";
+    private static final String WAS_ASSIGNED_AS = "] was successfully assigned as ";
+
+    private static MedicalCardService medicalCardService = ServiceFactory.getInstance().getCardService();
 
     public long signIn(String email, String password) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
@@ -81,7 +80,6 @@ public class UserService {
             userDao.updateUserRole(id, NURSE);
             LOGGER.info(USER_NO + id + WAS_ASSIGNED_AS + NURSE);
         }
-
     }
 
     public void assignAsDoctor(DoctorDto doctorDto) {
@@ -97,32 +95,26 @@ public class UserService {
             patientDto.setCardId(medicalCard.getId());
             LOGGER.info("Medical card id# [" + medicalCard.getId() + "] was created");
         }
+
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.updateUserToPatient(patientDto);
             LOGGER.info(USER_NO + patientDto.getId() + WAS_ASSIGNED_AS + patientDto.getRole());
-        }catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 
     public List<UserDto> getNursesByAssignmentID(long id) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
-            return userDao.getNurserByAssignmentID(id).stream()
+            return userDao.getNurserByAssignmentId(id).stream()
                     .map(UserDto::new)
                     .collect(Collectors.toList());
         }
     }
-
 
     public void dischargePatientByMedicalCardId(long medicalCardId) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
              User user = userDao.getUserByMedicalCardId(medicalCardId);
              userDao.dischargePatient(user);
              LOGGER.info("Patient id# [" + user.getId() +"] was successfully discharged ");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 }

@@ -17,9 +17,9 @@ public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentN
         super(connection);
     }
 
-    public static final String INSERT_INTO_ASSIGNMENT_NURSEHELPER = "INSERT INTO assignment_nursehelper " +
+    private static final String CREATE_ASSIGNMENT_NURSEHELPER_QUERY = "INSERT INTO assignment_nursehelper " +
             "(nurse_id, assignment_id) VALUES (? , ?)";
-    public static final String DELETE_BY_ASSIGNMENT_ID = "DELETE FROM assignment_nursehelper where assignment_id = ?;";
+    private static final String DELETE_BY_ASSIGNMENT_ID_QUERY = "DELETE FROM assignment_nursehelper where assignment_id = ?;";
 
 
     @Override
@@ -40,10 +40,10 @@ public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentN
 
     @Override
     public void delete(long id) {
-        try (PreparedStatement ps = connection.prepareCall(DELETE_BY_ASSIGNMENT_ID)) {
+        try (PreparedStatement ps = connection.prepareCall(DELETE_BY_ASSIGNMENT_ID_QUERY)) {
             ps.setLong(1, id);
             ps.execute();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
@@ -52,7 +52,7 @@ public class JDBCAssignmentNursehelperDao extends JDBCDao implements AssignmentN
 
     @Override
     public void addUserToAssignment(long nurseId, long assignmentId) {
-        try (PreparedStatement ps = connection.prepareCall(INSERT_INTO_ASSIGNMENT_NURSEHELPER)) {
+        try (PreparedStatement ps = connection.prepareCall(CREATE_ASSIGNMENT_NURSEHELPER_QUERY)) {
             ps.setLong(1, nurseId);
             ps.setLong(2, assignmentId);
             ps.execute();

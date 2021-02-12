@@ -8,19 +8,17 @@ public abstract class DaoFactory {
 
     public abstract UserDao createUserDao();
     public abstract MedicalCardDao createMedicalCardDao();
-    public abstract AssignmentDao createAssignmentDao();
+    public abstract AssignmentDao getAssignmentDao();
     public abstract AssignmentNursehelperDao createAssignmentNursehelperDao();
 
     public static synchronized  DaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (DaoFactory.class) {
                 if (daoFactory == null) {
-                    DaoFactory temp = new JDBCDaoFactory();
-                    daoFactory = temp;
+                    daoFactory = new JDBCDaoFactory();
                 }
             }
         }
         return daoFactory;
     }
 }
-
