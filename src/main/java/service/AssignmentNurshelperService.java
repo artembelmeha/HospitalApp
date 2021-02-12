@@ -14,10 +14,6 @@ public class AssignmentNurshelperService {
                      DaoFactory.getInstance().createAssignmentNursehelperDao()) {
             assignmentNursehelperDao.addUserToAssignment(nurseId, assignmentId);
             LOGGER.info("User id#[" + nurseId + "] assigned to Assignment id [" + assignmentId + "]");
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 

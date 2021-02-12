@@ -26,17 +26,13 @@ public class MedicalCardService {
     public MedicalCard getMedicalCardById(long id) {
         try (MedicalCardDao medicalCardDao = DaoFactory.getInstance().createMedicalCardDao()) {
             return medicalCardDao.findById(id);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
     public void setFinalDiagnosisById(MedicalCard medicalCard) {
         try (MedicalCardDao medicalCardDao = DaoFactory.getInstance().createMedicalCardDao()) {
             medicalCardDao.update(medicalCard);
-        } catch (EntityNotFoundException | UnknownSqlException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
         }

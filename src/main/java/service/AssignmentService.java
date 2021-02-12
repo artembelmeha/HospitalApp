@@ -17,20 +17,12 @@ public class AssignmentService {
     public List<Assignment> getAssignmentByMedicalCardId(long id) {
         try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
             return assignmentDao.getAssignmentByMedicalCardId(id);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
     public Assignment getAssignmentById(long id) {
         try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
             return assignmentDao.findById(id);
-        } catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
@@ -42,16 +34,12 @@ public class AssignmentService {
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
-            throw new UnknownSqlException();
         }
     }
 
     public void addAssignmentToMedicalCard(Assignment assignment) {
         try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
             assignmentDao.create(assignment);
-        }catch (EntityNotFoundException | UnknownSqlException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 }

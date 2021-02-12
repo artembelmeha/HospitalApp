@@ -19,7 +19,7 @@
 
 </head>
 <body style ="background: #eee;">
-<jsp:include page="header.jsp"/>
+<jsp:include page="../header.jsp"/>
 <div class="m-5 p-1">
     <h2 style="position: center"><fmt:message key="message.welcome"/></h2>
     <h3><fmt:message key="message.more"/></h3>

@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
             if (currentUser.isNurse()) {
                 return REDIRECT_NURSE_SUCCESS;
             }
-            return REDIRECT_SUCCESS;
+            return REDIRECT_UNDEFINE_SUCCESS;
         } catch (UnknownSqlException e) {
             LOGGER.error("Error caught while executing the method:", e);
             session.setAttribute(ERROR, e.getMessage());
