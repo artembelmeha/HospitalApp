@@ -51,9 +51,4 @@ public class UserMapper {
         return user;
     }
 
-    public User makeUnique(Map<Long, User> cache, User User) {
-        cache.putIfAbsent(User.getId(), User);
-        return cache.get(User.getId());
-    }
-
 }

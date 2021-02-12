@@ -39,8 +39,8 @@ public class JDBCMedicalCardDao extends JDBCDao implements MedicalCardDao {
             LOGGER.error(e.getMessage());
             throw new UnknownSqlException(e.getMessage());
         }
-        MedicalCard savedMedicalCard = this.findByDiagnosis(medicalCard.getFinalDiagnosis());
-        savedMedicalCard.setFinalDiagnosis("");
+        savedMedicalCard = this.findByDiagnosis(medicalCard.getFinalDiagnosis());
+        cleanupFirstDiagnosis(savedMedicalCard);
         this.update(savedMedicalCard);
         LOGGER.debug("MedicalCard with id [ "+savedMedicalCard.getId()+" ] successfully saved.");
         return savedMedicalCard;

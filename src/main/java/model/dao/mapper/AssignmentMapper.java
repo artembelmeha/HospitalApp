@@ -48,4 +48,5 @@ public class AssignmentMapper {
         assignment.setType(AssignmentType.valueOf(rs.getString(TYPE)));
         return assignment;
     }
+
 }

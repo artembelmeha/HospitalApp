@@ -47,14 +47,15 @@
             <td>
                 <input type="text"  id="email" class="form-control form-control-sm ${status}" name="email" value="${email}"
                        onclick="clearError()"
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="<fmt:message key="message.Email"/>" />
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="<fmt:message key="message.Email"/>"
+                required/>
             </td>
         </tr>
         <tr>
             <td> <fmt:message key="login.password" /> :</td>
             <td>
                 <input type="password" id="password" class="form-control form-control-sm ${status}" name="password" value="${password}"
-                       onclick="clearError()" />
+                       onclick="clearError()" required/>
             </td>
         </tr>
         <tr>

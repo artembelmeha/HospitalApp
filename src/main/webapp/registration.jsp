@@ -35,7 +35,7 @@
     <h1><fmt:message key="login.newUserRegistration"/></h1>
     <br>
     <c:set var = "status" scope = "page" value = "${error.length()>5 ? 'is-invalid' : ''}"/>
-    <form method="POST" method="POST" action="/api/registration">
+    <form method="POST"  action="/api/registration">
         <c:if test="${status eq 'is-invalid'}" >
             <div class="is-invalid" id="test" style="color: #ff0000">
                     <fmt:message  key="error.alreadyExist"/>
@@ -48,7 +48,7 @@
                 <td>
                     <input type="text" id="firstName" class="form-control form-control-sm ${status}"
                            name="firstName" value="${firstName}"
-                           pattern="[A-Z][a-z]+" title="<fmt:message key="message.forName"/>" />
+                           pattern="[A-Z][a-z]+" title="<fmt:message key="message.forName"/>" required/>
                 </td>
             </tr>
             <tr>
@@ -56,7 +56,7 @@
                 <td>
                     <input type="text" id="lastName" class="form-control form-control-sm ${status}"
                            name="lastName" value="${lastName}"
-                           pattern="[A-Z][a-z]+" title="<fmt:message key="message.forName"/>" />
+                           pattern="[A-Z][a-z]+" title="<fmt:message key="message.forName"/>" required/>
                 </td>
             </tr>
 
@@ -65,7 +65,7 @@
                 <td>
                     <input type="text" id="email" class="form-control form-control-sm ${status}"
                            name="email" value="${email}"
-                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="<fmt:message key="message.Email"/>"/>
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="<fmt:message key="message.Email"/>" required/>
                 </td>
             </tr>
 
@@ -74,7 +74,7 @@
                 <td>
                     <input type="password" id="password" class="form-control form-control-sm ${status}"
                            name="password" value="${password}"
-                    pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}" title="<fmt:message key="message.Password"/>"  />
+                    pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}" title="<fmt:message key="message.Password"/>"  required/>
                 </td>
             </tr>
 

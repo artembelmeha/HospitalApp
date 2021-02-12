@@ -15,8 +15,8 @@ public class AssignmentService {
     private static final Logger LOGGER = Logger.getLogger(AssignmentService.class);
 
     public List<Assignment> getAssignmentByMedicalCardId(long id) {
-        try (AssignmentDao assignmentDao = DaoFactory.getInstance().createAssignmentDao()) {
-            return assignmentDao.getAssignmentByMedicalCardId(id);
+        try (AssignmentDao assignmentDao = DaoFactory.getInstance().getAssignmentDao()) {
+            return assignmentDao.getAssignmentsByMedicalCardId(id);
         }
     }
 
@@ -36,9 +36,6 @@ public class AssignmentService {
                 assignmentDao.cleanupAssignmentRefWhenCompleted(id);
             }
             assignmentDao.update(assignment);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 

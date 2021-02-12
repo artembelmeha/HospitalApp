@@ -48,7 +48,7 @@
                     <label><fmt:message key="assignment.currentDiagnosis"/>:</label>
                 </td>
                 <td>
-                    <input type="text" name="currentDiagnosis"/>
+                    <input type="text" name="currentDiagnosis" required/>
                 </td>
             </tr>
             <tr>

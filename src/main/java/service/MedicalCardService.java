@@ -30,9 +30,6 @@ public class MedicalCardService {
     public void update(MedicalCard medicalCard) {
         try (MedicalCardDao medicalCardDao = DaoFactory.getInstance().createMedicalCardDao()) {
             medicalCardDao.update(medicalCard);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
         }
     }
 }

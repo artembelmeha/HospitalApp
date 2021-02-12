@@ -5,7 +5,6 @@ import model.dto.PatientDto;
 import model.entity.Role;
 import model.entity.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao extends GenericDao<User>{
