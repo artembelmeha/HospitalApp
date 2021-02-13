@@ -1,13 +1,11 @@
 package service;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import exception.UnknownSqlException;
 import model.dao.AssignmentDao;
 import model.dao.DaoFactory;
 import model.entity.Assignment;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 public class AssignmentService {
 
